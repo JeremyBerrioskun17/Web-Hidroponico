@@ -1,0 +1,243 @@
+﻿/* ===== Sensory Control — estilos aislados (.scx*) ===== */
+.scx .scx-title {
+    color: #0f5132;
+    font-weight: 800
+}
+
+.scx .scx-card {
+    border: 1px solid rgba(20,180,120,.14);
+    border-radius: 16px;
+    box-shadow: 0 10px 26px rgba(2,8,20,.06);
+}
+
+/* Iconos grandes en cards */
+.scx .scx-ico {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: rgba(25,135,84,.08);
+    color: #198754;
+    font-size: 1.4rem
+}
+
+    .scx .scx-ico.success {
+        color: #198754
+    }
+
+.scx .scx-kpi-ico {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: rgba(25,135,84,.10);
+    color: #198754;
+    font-size: 1.1rem
+}
+
+/* Switch XL (táctil) */
+.scx .scx-switch-xl input {
+    display: none
+}
+
+.scx .scx-switch-xl label {
+    --w: 64px;
+    --h: 34px;
+    --p: 4px;
+    width: var(--w);
+    height: var(--h);
+    border-radius: 999px;
+    display: block;
+    cursor: pointer;
+    background: #e9ecef;
+    border: 1px solid #e1e5ea;
+    position: relative;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,.06);
+    transition: background .2s ease,border-color .2s ease
+}
+
+    .scx .scx-switch-xl label::after {
+        content: "";
+        position: absolute;
+        top: var(--p);
+        left: var(--p);
+        width: calc(var(--h) - var(--p)*2);
+        height: calc(var(--h) - var(--p)*2);
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,.15);
+        transition: transform .22s ease
+    }
+
+.scx .scx-switch-xl input:checked + label {
+    background: linear-gradient(90deg,#19a974,#21d19a);
+    border-color: #19a974
+}
+
+    .scx .scx-switch-xl input:checked + label::after {
+        transform: translateX(calc(var(--w) - var(--h)))
+    }
+
+/* Más presencia en botones */
+.scx .scx-btn-success {
+    background: #198754;
+    color: #fff;
+    border-color: #198754
+}
+
+    .scx .scx-btn-success:hover {
+        background: #157347;
+        border-color: #157347
+    }
+
+.scx .scx-btn-outline-success {
+    background: #fff;
+    color: #198754;
+    border: 2px solid #198754
+}
+
+    .scx .scx-btn-outline-success:hover {
+        background: #198754;
+        color: #fff
+    }
+
+/* Badge palette propia */
+.scx .scx-badge-success {
+    background: #198754;
+    color: #fff
+}
+
+.scx .scx-badge-success-subtle {
+    background: #e9fce3;
+    color: #0f5132;
+    border: 1px solid #cdebd9
+}
+
+.scx .scx-badge-secondary {
+    background: #eef2f7;
+    color: #1f2d3d
+}
+
+.scx .scx-badge-primary {
+    background: #0d6efd
+}
+
+.scx .scx-badge-warning {
+    background: #ffcc4d
+}
+
+.scx .scx-badge-success, .scx .scx-badge-primary, .scx .scx-badge-warning {
+    border: 0
+}
+
+/* Card de actuador con sutil “lift” */
+.scx .act-card {
+    transition: transform .15s ease,box-shadow .15s ease
+}
+
+    .scx .act-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(16,24,40,.12)
+    }
+
+.scx .act-disabled .card-body {
+    filter: saturate(.95) opacity(.92);
+    pointer-events: none
+}
+
+.scx .act-mask {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: .5rem .75rem;
+    border-radius: 16px;
+    background: rgba(255,255,255,.55)
+}
+
+/* Tabla “verde” */
+.scx .scx-table thead tr th {
+    background: linear-gradient(90deg,#0f5132,#198754);
+    color: #fff;
+    border: 0;
+    font-weight: 700
+}
+
+.scx .scx-table tbody tr:hover {
+    background: rgba(25,135,84,.06)
+}
+
+.scx .scx-table tbody td {
+    vertical-align: middle
+}
+
+/* Accesibilidad: reduce animaciones si el usuario lo pide */
+@media (prefers-reduced-motion: reduce) {
+    .scx .act-card, .scx .scx-switch-xl label, .scx .scx-switch-xl label::after {
+        transition: none !important
+    }
+}
+/* ===== AG Grid custom green theme ===== */
+.ag-theme-green {
+    --ag-foreground-color: #1e293b;
+    --ag-background-color: #ffffff;
+    --ag-header-background-color: linear-gradient(90deg, #0f5132, #198754);
+    --ag-header-foreground-color: #ffffff;
+    --ag-header-font-size: 15px;
+    --ag-font-size: 15px;
+    --ag-font-family: "Inter", "Segoe UI", sans-serif;
+    --ag-odd-row-background-color: #f9fdfb;
+    --ag-row-hover-color: rgba(33, 209, 154, 0.15);
+    --ag-selected-row-background-color: rgba(33, 209, 154, 0.25);
+    --ag-borders: #d3f1e1;
+    --ag-border-radius: 12px;
+    --ag-grid-size: 6px;
+    --ag-row-height: 46px;
+    --ag-header-height: 52px;
+    --ag-checkbox-checked-color: #15b67a;
+}
+
+    .ag-theme-green .ag-root-wrapper {
+        border-radius: 14px;
+        border: 1px solid rgba(20, 180, 120, 0.2);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .ag-theme-green .ag-header-cell {
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+    }
+
+    .ag-theme-green .ag-cell {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        color: #1f2d3d;
+    }
+
+    .ag-theme-green .ag-row-hover {
+        cursor: pointer;
+        transform: scale(1.002);
+        transition: all 0.15s ease;
+    }
+
+    /* Numeración y badges */
+    .ag-theme-green .ag-cell:first-child {
+        color: #198754;
+        font-weight: 700;
+    }
+
+    /* Paginador */
+    .ag-theme-green .ag-paging-panel {
+        background: #f6fbf8;
+        border-top: 1px solid rgba(20, 180, 120, 0.15);
+        font-size: 14px;
+    }
+
+    .ag-theme-green .ag-paging-button {
+        color: #198754;
+    }

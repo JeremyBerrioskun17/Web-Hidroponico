@@ -1,0 +1,377 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\pages\\sensory-control\\sensorycontrol.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\pages\\sensory-control\\sensorycontrol.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\pages\\sensorymonitoring.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\pages\\sensorymonitoring.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\pages\\sensory-control\\sensory-control.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\pages\\sensory-control\\sensory-control.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\services\\leds.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\services\\leds.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\context\\authcontext.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\context\\authcontext.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\services\\sensors.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\services\\sensors.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\services\\iotservice.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\services\\iotservice.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\services\\plagas.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\services\\plagas.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\services\\catalogos.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\services\\catalogos.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\.env||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\.env||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\pages\\diagnostics.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\pages\\diagnostics.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\pages\\login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\pages\\login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\pages\\catalogos.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\pages\\catalogos.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\services\\enfermedades.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\services\\enfermedades.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\components\\layout.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\components\\layout.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\routes.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\routes.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|c:\\users\\ing jeremy\\desktop\\web_hidroponico_invernadero\\web_hidroponico_invernadero\\src\\services\\diagnosticos.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7CE1A8AF-7BB2-B62D-BC9D-B411D9D98DC4}|WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero.esproj|solutionrelative:web_hidroponico_invernadero\\src\\services\\diagnosticos.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "sensory-control.css",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\pages\\sensory-control\\sensory-control.css",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\pages\\sensory-control\\sensory-control.css",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\pages\\sensory-control\\sensory-control.css",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\pages\\sensory-control\\sensory-control.css",
+              "ViewState": "AgIAANYAAAAAAAAAAAAkwPMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-10-23T05:56:35.612Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "index.css",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\index.css",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\index.css",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\index.css",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\index.css",
+              "ViewState": "AgIAAPQDAAAAAAAAAAAkwBEEAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-10-23T05:44:46.149Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SensoryMonitoring.jsx",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\pages\\SensoryMonitoring.jsx",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\pages\\SensoryMonitoring.jsx",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\pages\\SensoryMonitoring.jsx",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\pages\\SensoryMonitoring.jsx",
+              "ViewState": "AgIAAO4BAAAAAAAAAAAmwAgCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-23T05:39:16.371Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthContext.jsx",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\context\\AuthContext.jsx",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\context\\AuthContext.jsx",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\context\\AuthContext.jsx",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\context\\AuthContext.jsx",
+              "ViewState": "AgIAACcAAAAAAAAAAAAYwDQAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-11T08:00:53.505Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SensoryControl.jsx",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\WEB_Hidroponico_Invernadero\\src\\pages\\sensory-control\\SensoryControl.jsx",
+              "RelativeDocumentMoniker": "WEB_Hidroponico_Invernadero\\src\\pages\\sensory-control\\SensoryControl.jsx",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\WEB_Hidroponico_Invernadero\\src\\pages\\sensory-control\\SensoryControl.jsx*",
+              "RelativeToolTip": "WEB_Hidroponico_Invernadero\\src\\pages\\sensory-control\\SensoryControl.jsx*",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-04T06:19:55.397Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Catalogos.jsx",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\pages\\Catalogos.jsx",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\pages\\Catalogos.jsx",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\pages\\Catalogos.jsx",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\pages\\Catalogos.jsx",
+              "ViewState": "AgIAALcBAAAAAAAAAAAuwMYBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-03T02:04:29.635Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "enfermedades.js",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\enfermedades.js",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\services\\enfermedades.js",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\enfermedades.js",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\services\\enfermedades.js",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAmwCgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-03T02:03:55.904Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Diagnostics.jsx",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\pages\\Diagnostics.jsx",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\pages\\Diagnostics.jsx",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\pages\\Diagnostics.jsx",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\pages\\Diagnostics.jsx",
+              "ViewState": "AgIAACYAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-02T01:46:12.319Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "iotService.js",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\iotService.js",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\services\\iotService.js",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\iotService.js",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\services\\iotService.js",
+              "ViewState": "AgIAAAkAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-06T02:31:10.081Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "plagas.js",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\plagas.js",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\services\\plagas.js",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\plagas.js",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\services\\plagas.js",
+              "ViewState": "AgIAABEAAAAAAAAAAAAmwCgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-03T02:03:13.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "leds.js",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\leds.js",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\services\\leds.js",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\leds.js",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\services\\leds.js",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwB0AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-04T06:19:29.964Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "catalogos.js",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\catalogos.js",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\services\\catalogos.js",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\catalogos.js",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\services\\catalogos.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-03T02:05:20.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "sensors.js",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\sensors.js",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\services\\sensors.js",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\sensors.js",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\services\\sensors.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-08T04:49:19.565Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "main.jsx",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\main.jsx",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\main.jsx",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\main.jsx",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\main.jsx",
+              "ViewState": "AgIAAAMAAAAAAAAAAIBZwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-03T02:05:31.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": ".env",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\.env",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\.env",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\.env",
+              "RelativeToolTip": "web_hidroponico_invernadero\\.env",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-10-06T03:52:06.17Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\.gitignore",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\.gitignore",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\.gitignore",
+              "RelativeToolTip": "web_hidroponico_invernadero\\.gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-10-06T04:43:53.926Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "routes.jsx",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\routes.jsx",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\routes.jsx",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\routes.jsx",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\routes.jsx",
+              "ViewState": "AgIAABAAAAAAAAAAAABhwCsAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-03T02:05:36.812Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "App.jsx",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\App.jsx",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\App.jsx",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\App.jsx",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\App.jsx",
+              "ViewState": "AgIAAAEAAAAAAAAAAABhwAsAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-03T02:06:14.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Login.jsx",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\pages\\Login.jsx",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\pages\\Login.jsx",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\pages\\Login.jsx",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\pages\\Login.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-04T06:47:08.023Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "diagnosticos.js",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\diagnosticos.js",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\services\\diagnosticos.js",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\services\\diagnosticos.js",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\services\\diagnosticos.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-02T01:56:26.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Layout.jsx",
+              "DocumentMoniker": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\components\\Layout.jsx",
+              "RelativeDocumentMoniker": "web_hidroponico_invernadero\\src\\components\\Layout.jsx",
+              "ToolTip": "C:\\Users\\Ing Jeremy\\Desktop\\WEB_Hidroponico_Invernadero\\web_hidroponico_invernadero\\src\\components\\Layout.jsx",
+              "RelativeToolTip": "web_hidroponico_invernadero\\src\\components\\Layout.jsx",
+              "ViewState": "AgIAAFcAAAAAAAAAAIBZwG0AAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-02T01:33:02.542Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
