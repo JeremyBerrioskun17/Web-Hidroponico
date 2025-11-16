@@ -11,6 +11,8 @@ import SensoryControl from "./pages/sensory-control/SensoryControl.jsx";
 import SensoryMonitoring from "./pages/SensoryMonitoring.jsx";
 import Catalogos from "./pages/Catalogos.jsx";
 
+import Cosechas from "./pages/Cosecha/Cosechas.jsx";
+
 export default function App() {
     return (
         <Routes>
@@ -29,6 +31,7 @@ export default function App() {
                 <Route path="sensoryControl" element={<SensoryControl />} />
                 <Route path="sensoryMonitoring" element={<SensoryMonitoring />} />
                 <Route path="catalogos" element={<Catalogos />} />
+                <Route path="cosecha" element={<Cosechas />} />
             </Route>
 
             {/* Catch-all */}

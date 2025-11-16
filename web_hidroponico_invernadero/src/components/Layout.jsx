@@ -183,6 +183,38 @@ export default function Layout() {
                         </li>
                     </>
                 )}
+                {/* ====== Cosecha ====== */}
+                {(can.verGestion || can.verIoT) && (
+                <>
+                    <hr className="sidebar-divider" />
+                    <div className="sidebar-heading">Hidroponía</div>
+
+                    <li className="nav-item">
+                    <a
+                        className="nav-link collapsed"
+                        href="#collapseHidro"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseHidro"
+                        aria-expanded="false"
+                        aria-controls="collapseHidro"
+                    >
+                        <i className="fas fa-water"></i>
+                        <span>Hidroponía</span>
+                    </a>
+                    <div id="collapseHidro" className="collapse" data-bs-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                        <h6 className="collapse-header">Gestión:</h6>
+                        <NavLink className="collapse-item" to="/hidroponicos" onClick={closeAllSubmenus}>
+                            Hidropónicos
+                        </NavLink>
+                        <NavLink className="collapse-item" to="/cosecha" onClick={closeAllSubmenus}>
+                            Cosechas
+                        </NavLink>
+                        </div>
+                    </div>
+                    </li>
+                </>
+                )}
 
                 {/* ====== IoT ====== */}
                 {can.verIoT && (
