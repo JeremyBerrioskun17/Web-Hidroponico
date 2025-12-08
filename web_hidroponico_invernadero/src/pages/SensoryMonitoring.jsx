@@ -299,7 +299,7 @@ export default function RealtimeSensorsResponsive() {
                 </div>
 
                 <div className="col-lg-4">
-                    {/* KPIs sensores actuales */}
+                    {/* KPIs sensores actuales
                     <section className="card-soft p-3 mb-3">
                         <div className="card-title mb-2">Lecturas actuales</div>
 
@@ -331,7 +331,7 @@ export default function RealtimeSensorsResponsive() {
                                 {last ? last.t.toLocaleTimeString() : "—"}
                             </span>
                         </div>
-                    </section>
+                    </section> */}
 
                     <section className="card-soft p-3">
                         <div className="card-title">Distribución por diagnóstico</div>

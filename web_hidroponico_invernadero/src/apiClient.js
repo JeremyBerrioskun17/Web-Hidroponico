@@ -13,7 +13,7 @@ export const api = axios.create({
 });
 
 
-// Inyecta Authorization: Bearer <token> si hay sesión
+// Inyecta Authorization: Bearer <token> si hay sesiï¿½n
 api.interceptors.request.use((config) => {
     const auth = getStoredAuth();
     if (auth?.token) config.headers.Authorization = `Bearer ${auth.token}`;
@@ -21,6 +21,7 @@ api.interceptors.request.use((config) => {
 });
 
 
-// (Opcional) logout automático si el backend responde 401
+
+// (Opcional) logout automï¿½tico si el backend responde 401
 // import { logout } from "./auth/somewhere";
 // api.interceptors.response.use(r => r, err => { if (err?.response?.status === 401) logout(); return Promise.reject(err); });

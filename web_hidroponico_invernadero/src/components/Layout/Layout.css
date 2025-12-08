@@ -1,0 +1,274 @@
+/* ======================================
+   LAYOUT GLOBAL — GueguenseCode
+   Paleta verde profundo + verde pastel
+   Animaciones suaves y accesibles
+======================================= */
+
+:root {
+  --green-main: #29e36d;
+  --green-dark: #7dd181;
+  --green-soft: #45e198;
+  --green-light: #23df7e;
+  --green-pastel: #e8fff3;
+  --text-dark: #1e293b;
+  --text-soft: #475569;
+}
+
+/* ======================================
+   TOPBAR — Verde moderno
+======================================= */
+
+.topbar {
+  background: var(--green-main) !important;
+  border-bottom: 2px solid var(--green-dark);
+  color: #fff !important;
+}
+
+.topbar .nav-link,
+.topbar i {
+  color: #ffffff !important;
+  font-size: 1.05rem;
+}
+
+.username-topbar {
+  font-weight: 600;
+  color: #fff !important;
+}
+
+/* Badge del topbar */
+.badge-counter {
+  background: #d4d4d4;
+  color: var(--green-dark);
+  font-weight: 700;
+}
+
+/* ======================================
+   SIDEBAR — Verde elegante
+======================================= */
+
+.sidebar {
+  background: linear-gradient(
+    180deg,
+    var(--green-dark),
+    var(--green-main)
+  ) !important;
+  width: 260px;
+  font-size: 1.05rem;
+  padding-top: 1rem;
+}
+
+.sidebar .nav-link {
+  color: #e2fced !important;
+  padding: 14px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-weight: 500;
+  transition: background .25s ease, padding-left .25s ease;
+}
+
+/* Iconos más grandes */
+.sidebar .nav-link i {
+  font-size: 1.15rem;
+  width: 22px;
+  text-align: center;
+}
+
+.sidebar .nav-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  padding-left: 24px;
+  border-left: 4px solid var(--green-light);
+}
+
+/* ACTIVE link */
+.sidebar .nav-link.active {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-left: 4px solid #fff;
+  font-weight: 600 !important;
+}
+
+/* ======================================
+   BRAND — cabecera del sidebar
+======================================= */
+
+.sidebar-brand {
+    height: 70px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Icono */
+.sidebar-brand-icon i {
+    font-size: 1.55rem;
+    color: var(--green-pastel);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Texto */
+.sidebar-brand-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--green-pastel);
+    transition: opacity 0.25s ease;
+}
+
+/* ================================
+   MODO COLAPSADO DEL SIDEBAR
+=================================*/
+.sidebar.toggled .sidebar-brand {
+    justify-content: center !important;   /* Centra todo */
+    padding: 18px 0 !important;
+}
+
+.sidebar.toggled .sidebar-brand-text {
+    opacity: 0;                            /* Oculta texto suavemente */
+}
+
+.sidebar.toggled .sidebar-brand-icon {
+    margin: 0 auto;                        /* Icono 100% centrado */
+}
+
+/* ======================================
+   SECCIONES (SIDEBAR HEADING)
+======================================= */
+
+.sidebar-heading {
+  padding: 10px 20px;
+  font-size: 0.92rem;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: #d1fae5;
+  text-transform: uppercase;
+}
+
+/* ======================================
+   SUBMENÚS — animación suave
+======================================= */
+
+.collapse-inner {
+  background: var(--green-pastel);
+  border-radius: 14px !important;
+  padding: 8px 0 10px;
+  animation: fadeSlide .25s ease;
+}
+
+.collapse-inner .collapse-header {
+  color: var(--text-soft);
+  font-weight: 700;
+  padding-left: 1rem;
+}
+
+/* Items del collapse */
+.collapse-item {
+  padding: 10px 20px;
+  color: var(--text-dark) !important;
+  font-weight: 500;
+  transition: background .2s ease, padding-left .25s ease;
+}
+
+.collapse-item:hover {
+  background: var(--green-light);
+  padding-left: 26px;
+}
+
+.collapse-item.active {
+  background: var(--green-soft);
+  font-weight: 700;
+}
+
+/* Animaciones suaves de entrada */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Soporte a tus clases JS: animating-show/hide */
+.collapse.animating-show .collapse-inner {
+  animation: fadeSlide .25s ease;
+}
+
+.collapse.animating-hide .collapse-inner {
+  animation: fadeSlideOut .25s ease;
+}
+
+@keyframes fadeSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* ======================================
+   BOTÓN DE TOGGLE SIDEBAR
+======================================= */
+
+#sidebarToggle,
+#sidebarToggleTop {
+  background: #ffffff22;
+  color: white;
+  transition: transform .2s ease, background .2s ease;
+}
+
+#sidebarToggle:hover,
+#sidebarToggleTop:hover {
+  background: #ffffff33;
+  transform: scale(1.08);
+}
+
+/* ======================================
+   TARJETA LATERAL
+======================================= */
+
+.sidebar-card {
+  background: rgba(255, 255, 255, .18);
+  border-radius: 12px;
+  padding: 18px;
+  color: rgb(135, 254, 129);
+  backdrop-filter: blur(6px);
+}
+
+/* ======================================
+   CONTENT WRAPPER
+======================================= */
+
+#content-wrapper {
+  background: #f8fafc;
+}
+
+/* Footer */
+footer {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+}
+
+/* ======================================
+   SCROLLBAR (opcional, más moderno)
+======================================= */
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #ffffff44;
+  border-radius: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}

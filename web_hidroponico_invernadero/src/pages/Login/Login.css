@@ -1,0 +1,181 @@
+/* ================================
+   LOGIN MODULE — CUSTOM STYLES
+   Colores suaves y verdes pastel
+   Animaciones más elegantes
+================================= */
+
+:root {
+  --green-main: #16a34a;          /* Verde principal (botón ingresar) */
+  --green-soft: #a7f3d0;          /* Verde pastel suave */
+  --green-light: #d1fae5;         /* Verde muy claro */
+  --lime: #32d399;
+  --text-slate: #334155;
+  --text-muted: #6b7280;
+}
+
+/* ----- Layout general del login ----- */
+.login-split {
+  background: #f8fafc;
+}
+
+.hero-col .login-hero {
+  box-shadow: 0 0 40px rgba(0, 0, 0, .1);
+}
+
+/* ----- Tarjeta del formulario ------ */
+.login-card {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
+  border-radius: 20px;
+  transition: transform .25s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ===============================
+   INPUTS MODERNOS & AMIGABLES
+================================ */
+
+.input-group-elevated {
+  background: #fff;
+  border-radius: 12px !important;
+  padding: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .05);
+  transition: box-shadow .2s ease;
+}
+
+.input-group-elevated:focus-within {
+  box-shadow: 0 0 0 3px var(--green-light);
+}
+
+.input-group-text.icon-soft {
+  background: var(--green-light);
+  color: var(--green-main);
+  border: none;
+  border-radius: 10px 0 0 10px !important;
+}
+
+.form-control-underline {
+  border: none !important;
+  background: transparent !important;
+  padding-left: 10px;
+  font-size: 1rem;
+  color: var(--text-slate);
+}
+
+.form-control-underline:focus {
+  background: transparent !important;
+  box-shadow: none;
+}
+
+/* Mostrar/Ocultar contraseña */
+.btn-eye {
+  cursor: pointer;
+  border: none;
+  background: var(--green-light);
+  border-radius: 0 10px 10px 0 !important;
+  transition: background .2s ease;
+}
+
+.btn-eye:hover {
+  background: var(--green-soft);
+}
+
+/* ===============================
+      BOTONES MODERNOS
+================================ */
+
+/* Animación suave */
+.btn-animate {
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.btn-animate:hover {
+  transform: scale(1.035);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .14);
+}
+
+/* ----- Botón INGRESAR ----- */
+.btn-gradient {
+  background: var(--green-main) !important;
+  border: none;
+  border-radius: 12px;
+  transition: background .2s ease;
+}
+
+.btn-gradient:hover {
+  background: #15803d !important; /* un poco más oscuro */
+}
+
+/* Botones sociales */
+.btn-social {
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: var(--text-slate);
+  transition: background .2s ease, transform .15s ease;
+}
+
+.btn-social:hover {
+  background: #e2e8f0;
+  transform: scale(1.025);
+}
+
+/* ===============================
+      LINKS LIME VERDES
+================================ */
+.link-lime {
+  color: var(--green-main) !important;
+  transition: opacity .2s ease;
+}
+
+.link-lime:hover {
+  opacity: .7;
+}
+
+/* ===============================
+       HERO BUTTONS
+================================ */
+
+.hero-btn {
+  background: rgba(255, 255, 255, .18);
+  padding: 12px 20px;
+  border-radius: 14px;
+  color: white;
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+  transition: transform .2s ease, background .2s ease;
+}
+
+.hero-btn:hover {
+  transform: scale(1.03);
+  background: rgba(255, 255, 255, .28);
+}
+
+/* ===============================
+       ICONOS & TITULOS
+================================ */
+
+.title-icon {
+  font-size: 1.6rem;
+  color: var(--green-main) !important;
+}
+
+.brand-logo {
+  height: 42px;
+}
+
+.brand-text {
+  font-size: 1.8rem;
+}
+
+/* ================================
+    Divider
+================================ */
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 1.5rem 0;
+}

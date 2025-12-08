@@ -27,7 +27,7 @@ import Catalogo from "./pages/Catalogos.jsx";
 
 import Cosecha from "./pages/Cosecha/Cosechas.jsx";
 
-import hidroponicos from "./pages/Cosecha/hidroponicos.jsx";
+import Hidroponico from "./pages/Hidroponico/Hidroponicos.jsx";
 
 export const routes = [
     // pública
@@ -49,7 +49,7 @@ export const routes = [
             { path: "sensoryControl", element: <SensoryControl /> },
             { path: "sensoryMonitoring", element: <SensoryMonitoring /> },
             { path: "cosecha", element: <Cosecha /> },
-             { path: "hidroponicos", element: <hHdroponico /> },
+             { path: "hidroponico", element: <Hidroponico /> },
         ],
     },
 
