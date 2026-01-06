@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+// use a placeholder/logo for branding; keep asset import if you later replace with real logo
 import LogoGC from "../assets/Logo_GC.png";
 
 export default function Layout() {
@@ -68,7 +69,7 @@ export default function Layout() {
                         <i className="fas fa-seedling"></i>
                     </div>
                     <div className="sidebar-brand-text mx-3">
-                        Gueguense<sup>Code</sup>
+                        NicaTech <sup>Solutions</sup>
                     </div>
                 </NavLink>
 
@@ -347,11 +348,11 @@ export default function Layout() {
                 <div className="sidebar-card d-none d-lg-flex">
                     <img
                         className="sidebar-card-illustration mb-2"
-                        src={LogoGC}
-                        alt="Ilustración de jardinería"
+                        src={"https://via.placeholder.com/120x80.png?text=NicaTech"}
+                        alt="NicaTech Solutions"
                     />
                     <p className="text-center mb-2">
-                        <strong>Invernadero Inteligente</strong> — IA + geolocalización para tu cultivo.
+                        <strong>NicaTech Solutions</strong> — Plataforma para monitoreo y control inteligente de cultivos.
                     </p>
                     <a className="btn btn-success btn-sm" href="#">
                         Ver más
@@ -474,7 +475,7 @@ export default function Layout() {
                 </div>
 
                 <footer className="bg-light text-center p-3 border-top mt-auto">
-                    © Gueguense Code
+                    © NicaTech Solutions
                 </footer>
             </div>
         </div>

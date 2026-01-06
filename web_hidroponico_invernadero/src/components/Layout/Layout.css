@@ -1,12 +1,12 @@
 /* ======================================
-   LAYOUT GLOBAL — GueguenseCode
-   Paleta verde profundo + verde pastel
-   Animaciones suaves y accesibles
-======================================= */
+   LAYOUT GLOBAL — NicaTech Solutions
+   Restored clean stylesheet: green sidebar, white icons/text,
+   integrated submenus and topbar dropdowns with smooth hovers.
+======================================== */
 
 :root {
-  --green-main: #29e36d;
-  --green-dark: #7dd181;
+  --green-main: #29e36d; /* original brand green */
+  --green-dark: #1aa85a;
   --green-soft: #45e198;
   --green-light: #23df7e;
   --green-pastel: #e8fff3;
@@ -14,13 +14,12 @@
   --text-soft: #475569;
 }
 
-/* ======================================
-   TOPBAR — Verde moderno
-======================================= */
-
+/* -----------------------------
+   TOPBAR
+   ----------------------------- */
 .topbar {
   background: var(--green-main) !important;
-  border-bottom: 2px solid var(--green-dark);
+  border-bottom: 2px solid rgba(0,0,0,0.06);
   color: #fff !important;
 }
 
@@ -30,245 +29,274 @@
   font-size: 1.05rem;
 }
 
+.topbar .nav-link {
+  transition: background .16s ease, transform .12s ease;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+.topbar .nav-link:hover {
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-1px);
+}
+
 .username-topbar {
   font-weight: 600;
   color: #fff !important;
 }
 
-/* Badge del topbar */
+/* notification/message badge (red style) */
 .badge-counter {
-  background: #d4d4d4;
-  color: var(--green-dark);
+  background: #e4433e;
+  color: #fff;
   font-weight: 700;
+  border-radius: 999px;
+  padding: 0.18rem 0.45rem;
+  min-width: 20px;
+  display: inline-block;
+  text-align: center;
+  font-size: 0.78rem;
 }
 
-/* ======================================
-   SIDEBAR — Verde elegante
-======================================= */
-
+/* -----------------------------
+   SIDEBAR
+   ----------------------------- */
 .sidebar {
-  background: linear-gradient(
-    180deg,
-    var(--green-dark),
-    var(--green-main)
-  ) !important;
+  background: linear-gradient(180deg, var(--green-dark), var(--green-main)) !important;
   width: 260px;
   font-size: 1.05rem;
   padding-top: 1rem;
+  color: #fff;
 }
 
 .sidebar .nav-link {
-  color: #e2fced !important;
-  padding: 14px 18px;
+  color: #ffffff !important;
+  padding: 12px 18px;
   display: flex;
   gap: 12px;
   align-items: center;
   font-weight: 500;
-  transition: background .25s ease, padding-left .25s ease;
+  transition: background .22s ease, padding-left .22s ease, transform .12s ease;
 }
 
-/* Iconos más grandes */
 .sidebar .nav-link i {
-  font-size: 1.15rem;
-  width: 22px;
+  font-size: 1.18rem;
+  width: 24px;
   text-align: center;
+  color: rgba(255,255,255,0.95);
+}
+
+.sidebar .nav-link span {
+  color: rgba(255,255,255,0.95);
 }
 
 .sidebar .nav-link:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255,255,255,0.06);
   padding-left: 24px;
-  border-left: 4px solid var(--green-light);
+  transform: translateY(-1px);
 }
 
-/* ACTIVE link */
 .sidebar .nav-link.active {
-  background: rgba(255, 255, 255, 0.22) !important;
-  border-left: 4px solid #fff;
-  font-weight: 600 !important;
+  background: rgba(255,255,255,0.12) !important;
+  border-left: 4px solid rgba(255,255,255,0.18);
+  font-weight: 700 !important;
 }
 
-/* ======================================
-   BRAND — cabecera del sidebar
-======================================= */
-
-.sidebar-brand {
-    height: 70px;
-    padding: 12px 18px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    overflow: hidden;
-    white-space: nowrap;
-    transition: all 0.3s ease-in-out;
-}
-
-/* Icono */
-.sidebar-brand-icon i {
-    font-size: 1.55rem;
-    color: var(--green-pastel);
-    transition: all 0.3s ease-in-out;
-}
-
-/* Texto */
-.sidebar-brand-text {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--green-pastel);
-    transition: opacity 0.25s ease;
-}
-
-/* ================================
-   MODO COLAPSADO DEL SIDEBAR
-=================================*/
-.sidebar.toggled .sidebar-brand {
-    justify-content: center !important;   /* Centra todo */
-    padding: 18px 0 !important;
-}
-
-.sidebar.toggled .sidebar-brand-text {
-    opacity: 0;                            /* Oculta texto suavemente */
-}
-
-.sidebar.toggled .sidebar-brand-icon {
-    margin: 0 auto;                        /* Icono 100% centrado */
-}
-
-/* ======================================
-   SECCIONES (SIDEBAR HEADING)
-======================================= */
-
+/* sidebar heading */
 .sidebar-heading {
   padding: 10px 20px;
   font-size: 0.92rem;
   letter-spacing: 0.5px;
   font-weight: 600;
-  color: #d1fae5;
+  color: rgba(255,255,255,0.92);
   text-transform: uppercase;
 }
 
-/* ======================================
-   SUBMENÚS — animación suave
-======================================= */
+/* brand */
+.sidebar-brand {
+  height: 70px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.sidebar-brand-icon i {
+  font-size: 1.55rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.sidebar-brand-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.95);
+}
+
+/* toggled state */
+.sidebar.toggled { width: 80px; }
+.sidebar.toggled .sidebar-brand-text { opacity: 0; }
+
+/* -----------------------------
+   SUBMENUS / COLLAPSE
+   ----------------------------- */
 .collapse-inner {
-  background: var(--green-pastel);
-  border-radius: 14px !important;
-  padding: 8px 0 10px;
-  animation: fadeSlide .25s ease;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border-radius: 10px !important;
+  padding: 6px 6px;
+  margin: 6px;
+}
+
+/* Floating submenu when sidebar is collapsed: make it a solid green panel */
+.sidebar .nav-item { position: relative; }
+
+/* Floating submenu when sidebar is collapsed: align to the hovered item */
+.sidebar.toggled .nav-item > .collapse-inner,
+.sidebar.toggled .nav-item .collapse-inner {
+  position: absolute !important;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 200px;
+  z-index: 1100;
+  background: linear-gradient(180deg, var(--green-dark), var(--green-main));
+  border-radius: 10px !important;
+  padding: 8px 6px !important;
+  margin: 0 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+}
+
+.sidebar.toggled .nav-item > .collapse-inner::before,
+.sidebar.toggled .nav-item .collapse-inner::before {
+  /* caret centered vertically relative to the hovered item */
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(180deg, var(--green-dark), var(--green-main));
+  box-shadow: -2px -2px 6px rgba(0,0,0,0.06);
+}
+
+.sidebar.toggled .nav-item > .collapse-inner .collapse-header,
+.sidebar.toggled .nav-item .collapse-inner .collapse-header,
+.sidebar.toggled .nav-item > .collapse-inner .collapse-item,
+.sidebar.toggled .nav-item .collapse-inner .collapse-item {
+  color: #fff !important;
+}
+
+.sidebar.toggled .nav-item > .collapse-inner .collapse-item,
+.sidebar.toggled .nav-item .collapse-inner .collapse-item {
+  white-space: nowrap;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.sidebar.toggled .nav-item > .collapse-inner .collapse-item:hover,
+.sidebar.toggled .nav-item .collapse-inner .collapse-item:hover,
+.sidebar.toggled .nav-item > .collapse-inner .collapse-item:focus,
+.sidebar.toggled .nav-item .collapse-inner .collapse-item:focus {
+  background: rgba(0,0,0,0.18) !important;
+  color: #fff !important;
 }
 
 .collapse-inner .collapse-header {
-  color: var(--text-soft);
+  color: rgba(255,255,255,0.85);
   font-weight: 700;
-  padding-left: 1rem;
+  padding-left: 0.75rem;
 }
 
-/* Items del collapse */
 .collapse-item {
-  padding: 10px 20px;
-  color: var(--text-dark) !important;
-  font-weight: 500;
-  transition: background .2s ease, padding-left .25s ease;
+  padding: 8px 14px;
+  color: #ffffff !important;
+  font-weight: 600;
+  transition: background .16s ease, padding-left .18s ease, transform .08s ease;
+  border-radius: 6px;
+  margin: 4px 4px;
+  white-space: normal; /* allow line-wrap for small screens */
 }
 
-.collapse-item:hover {
-  background: var(--green-light);
-  padding-left: 26px;
+.sidebar .collapse-inner .collapse-item:hover,
+.sidebar .collapse-inner .collapse-item:focus {
+  /* use a subtle dark overlay for higher contrast on green backgrounds */
+  background: rgba(0,0,0,0.12) !important;
+  padding-left: 22px;
+  transform: translateY(-1px);
+  color: #ffffff !important;
 }
 
-.collapse-item.active {
-  background: var(--green-soft);
-  font-weight: 700;
+.sidebar .collapse-inner .collapse-item.active {
+  background: rgba(0,0,0,0.14) !important;
+  font-weight: 800;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
 }
 
-/* Animaciones suaves de entrada */
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Soporte a tus clases JS: animating-show/hide */
-.collapse.animating-show .collapse-inner {
-  animation: fadeSlide .25s ease;
-}
-
-.collapse.animating-hide .collapse-inner {
-  animation: fadeSlideOut .25s ease;
-}
-
-@keyframes fadeSlideOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-}
-
-/* ======================================
-   BOTÓN DE TOGGLE SIDEBAR
-======================================= */
-
-#sidebarToggle,
-#sidebarToggleTop {
+/* -----------------------------
+   TOGGLER
+   ----------------------------- */
+#sidebarToggle, #sidebarToggleTop {
   background: #ffffff22;
   color: white;
   transition: transform .2s ease, background .2s ease;
 }
+#sidebarToggle:hover, #sidebarToggleTop:hover { background: #ffffff33; transform: scale(1.08); }
 
-#sidebarToggle:hover,
-#sidebarToggleTop:hover {
-  background: #ffffff33;
-  transform: scale(1.08);
-}
-
-/* ======================================
-   TARJETA LATERAL
-======================================= */
-
+/* -----------------------------
+   SIDEBAR CARD
+   ----------------------------- */
 .sidebar-card {
-  background: rgba(255, 255, 255, .18);
+  background: rgba(255, 255, 255, .08);
   border-radius: 12px;
-  padding: 18px;
-  color: rgb(135, 254, 129);
+  padding: 14px;
+  color: #fff;
   backdrop-filter: blur(6px);
 }
 
-/* ======================================
-   CONTENT WRAPPER
-======================================= */
+.sidebar-card img { max-width: 100%; height: auto; border-radius: 6px; }
 
-#content-wrapper {
-  background: #f8fafc;
+/* -----------------------------
+   TOPBAR DROPDOWNS
+   ----------------------------- */
+.topbar .dropdown-menu {
+  background: var(--green-dark);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+}
+.topbar .dropdown-header { color: #ffffffcc; font-weight: 700; padding: 10px 14px; }
+.topbar .dropdown-item { color: #fff !important; padding: 10px 12px; transition: background .12s ease; }
+.topbar .dropdown-item i { color: #fff !important; margin-right: 8px; }
+.topbar .dropdown-item:hover { background: rgba(255,255,255,0.04); }
+
+.dropdown-divider { border-color: rgba(255,255,255,0.06); }
+
+/* Profile dropdown tweak */
+.dropdown-menu .text-gray-400 { color: #ffffff88 !important; }
+
+/* -----------------------------
+   CONTENT / FOOTER
+   ----------------------------- */
+#content-wrapper { background: #f8fafc; }
+footer { font-size: 0.95rem; color: var(--text-soft); }
+
+/* small responsive tweaks */
+@media (max-width: 991px) {
+  .sidebar { width: 72px; }
+  .sidebar .nav-link span { display: none; }
+  .sidebar .nav-link { padding: 10px 8px; }
+  .sidebar .nav-link i { width: auto; }
+  .sidebar-brand-text { display: none; }
 }
 
-/* Footer */
-footer {
-  font-size: 0.95rem;
-  color: var(--text-soft);
+@media (max-width: 1200px) {
+  .sidebar { width: 220px; }
+  .sidebar .nav-link { padding: 10px 14px; font-size: 0.98rem; }
+  .collapse-inner { margin: 4px; }
 }
 
-/* ======================================
-   SCROLLBAR (opcional, más moderno)
-======================================= */
-
-.sidebar::-webkit-scrollbar {
-  width: 8px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: #ffffff44;
-  border-radius: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-  background: transparent;
+/* Ensure main button hovers (topbar and sidebar main nav links) keep their original feel */
+.sidebar .nav-link:hover,
+.topbar .nav-link:hover {
+  transition: background .16s ease, transform .12s ease;
 }

@@ -1,0 +1,74 @@
+/* Fondo oscuro */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(3px);
+}
+
+/* Contenedor del modal */
+.modal-container {
+  background: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  padding: 1.8rem;
+  transform: translateY(40px);
+  opacity: 0;
+  transition: all 0.35s ease;
+}
+
+/* Animación al abrir */
+.modal-container.open {
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.8rem;
+}
+
+.modal-desc {
+  margin-top: 0.8rem;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.form-body {
+  margin-top: 1rem;
+}
+
+/* Inputs */
+.form-input {
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.form-input:focus {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 0.2rem rgba(34,197,94,0.25);
+}
+
+/* Botón ver contraseña */
+.btn-eye {
+  cursor: pointer;
+  background: #f1f5f9;
+  border: none;
+}
+
+/* Transiciones suaves */
+.form-control,
+.form-select {
+  transition: all 0.2s ease;
+}

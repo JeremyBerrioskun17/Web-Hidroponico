@@ -1,0 +1,75 @@
+/* ===== BACKDROP ===== */
+.scx-backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* ===== MODAL ===== */
+.modal-fancy {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  animation: popIn .18s ease;
+}
+
+@keyframes popIn {
+  from { transform: translateY(-8px) scale(.995); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* ===== EMPTY ===== */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+.empty-state i {
+  font-size: 2rem;
+  color: #198754;
+  margin-bottom: 10px;
+}
+
+/* ===== CARD ===== */
+.card-horario {
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.08);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.card-horario:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(0,0,0,.14);
+}
+
+/* ===== BADGES ===== */
+.badge-success-soft {
+  background: #e9f7ef;
+  color: #198754;
+  font-weight: 600;
+}
+
+.badge-secondary-soft {
+  background: #f1f3f5;
+  color: #6c757d;
+  font-weight: 600;
+}
+
+/* ===== TEXT ===== */
+.desc {
+  font-size: .95rem;
+  color: #495057;
+}
+
+/* ===== CONFIRM ===== */
+.confirm-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(220,53,69,.15);
+  color: #dc3545;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: auto;
+}

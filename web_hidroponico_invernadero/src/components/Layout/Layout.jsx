@@ -104,7 +104,7 @@ export default function Layout() {
                     </div>
 
                     <div className="sidebar-brand-text">
-                        Gueguense<sup>Code</sup>
+                        NicaTech <sup>Solutions</sup>
                     </div>
                 </NavLink>
 
@@ -319,10 +319,10 @@ export default function Layout() {
                                     id="userDropdown"
                                     data-bs-toggle="dropdown"
                                 >
-                                    <span className="me-2 d-none d-lg-inline username-topbar">
-                                        <i className="fas fa-user-circle me-1"></i>
-                                        {user?.username} {user?.rol ? `· ${user.rol}` : ""}
-                                    </span>
+                                                    <span className="me-2 d-none d-lg-inline username-topbar">
+                                                        <i className="fas fa-user-circle me-1"></i>
+                                                        {user?.username} {user?.rol ? `· ${user.rol}` : ""}
+                                                    </span>
 
                                     <img
                                         className="img-profile rounded-circle"
@@ -362,7 +362,7 @@ export default function Layout() {
                 </div>
 
                 <footer className="bg-light text-center p-3 border-top mt-auto">
-                    © Gueguense Code
+                    © NicaTech Solutions
                 </footer>
             </div>
         </div>

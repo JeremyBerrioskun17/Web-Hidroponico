@@ -1,0 +1,37 @@
+.modal-fancy .modal-content {
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.15);
+  animation: popIn .2s ease;
+  border: none;
+}
+
+@keyframes popIn {
+  from { transform: translateY(-8px) scale(.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-header {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-title {
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.detail-field {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  font-weight: 500;
+}
+
+.detail-box {
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem;
+  min-height: 80px;
+}

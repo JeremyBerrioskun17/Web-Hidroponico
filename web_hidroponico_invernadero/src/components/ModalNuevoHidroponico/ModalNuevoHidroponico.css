@@ -1,0 +1,98 @@
+.hidro-modal {
+  border-radius: 14px;
+  overflow: hidden;
+  animation: popIn 0.18s ease;
+}
+
+@keyframes popIn {
+  from {
+    transform: translateY(-6px) scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.hidro-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.icon-header {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #e9f9f0;
+  color: #198754;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.form-desc {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.input-group-text {
+  width: 44px;
+  justify-content: center;
+  background: #f8f9fa;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+/* Fancy footer */
+.modal-fancy-footer {
+  border-top: 1px solid #eef2f7;
+  background: #fafcff;
+  padding: 12px 16px;
+}
+
+/* Submit button stronger gradient */
+.btn-submit {
+  background: linear-gradient(90deg,#10b981,#059669);
+  border: none;
+  color: #fff;
+}
+
+/* Loading overlay centered */
+.modal-loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(17,24,39,0.45);
+  z-index: 1200;
+  border-radius: 12px;
+}
+.loader-box {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  padding:18px 22px;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  border-radius: 10px;
+  min-width: 220px;
+}
+
+/* Subtle focus for inputs */
+.modal-fancy .form-control:focus, .modal-fancy .form-select:focus {
+  border-color: #059669;
+  box-shadow: 0 6px 18px rgba(5,150,105,0.12);
+}

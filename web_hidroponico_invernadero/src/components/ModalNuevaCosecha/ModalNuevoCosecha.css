@@ -1,0 +1,128 @@
+/* ModalNuevoCosecha.css */
+
+/* Modal general */
+.modal-fancy .modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transform-origin: center top;
+  animation: popIn 0.2s ease;
+  border: none;
+}
+
+/* Animación al abrir */
+@keyframes popIn {
+  from { transform: translateY(-10px) scale(0.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Encabezado del modal */
+.modal-fancy .modal-header {
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.modal-fancy .modal-title {
+  font-weight: 700;
+  color: #2d3748;
+}
+
+/* Labels */
+.modal-fancy .form-label {
+  font-weight: 600;
+  color: #4b5563;
+}
+
+/* Inputs y selects */
+.modal-fancy .form-control,
+.modal-fancy .form-select {
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  transition: all 0.2s;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+}
+
+.modal-fancy .form-control:focus,
+.modal-fancy .form-select:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  outline: none;
+}
+
+/* Input-group icons */
+.modal-fancy .input-icon {
+  width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  background-color: #f3f4f6;
+  border-right: 1px solid #d1d5db;
+}
+
+/* Date inputs especiales */
+.modal-fancy input[type="date"] {
+  padding-left: 0.75rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.modal-fancy input[type="date"]:hover {
+  background-color: #f9fafb;
+}
+
+.modal-fancy input[type="date"]:focus {
+  background-color: #ffffff;
+}
+
+/* Mensajes de ayuda y notas */
+.small-note {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Opciones de hidroponicos */
+.hidro-option {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.badge-num {
+  background: #f1fdf6;
+  color: #0f5132;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Botones */
+.modal-fancy .btn-success {
+  background-color: #10b981;
+  border-color: #10b981;
+  transition: all 0.2s;
+}
+
+.modal-fancy .btn-success:hover {
+  background-color: #059669;
+  border-color: #059669;
+}
+
+.modal-fancy .btn-outline-secondary {
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}
+
+/* Footer */
+.modal-fancy .modal-footer {
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Spinner */
+.modal-fancy .spinner-border {
+  width: 1rem;
+  height: 1rem;
+}

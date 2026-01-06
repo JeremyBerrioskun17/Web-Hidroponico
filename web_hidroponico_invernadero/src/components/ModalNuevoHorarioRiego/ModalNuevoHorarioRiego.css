@@ -1,0 +1,97 @@
+/* Hora integrada */
+.scx-time-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(25, 135, 84, 0.3);
+  background: #fff;
+}
+
+.scx-time-input i {
+  color: #198754;
+}
+
+.scx-time-input input {
+  border: 0;
+  outline: none;
+  flex: 1;
+  font-size: 1rem;
+}
+
+/* SpinEdit */
+.scx-spin {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(25, 135, 84, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.scx-spin button {
+  background: #e9f7f1;
+  border: 0;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #198754;
+}
+
+.scx-spin input {
+  width: 70px;
+  text-align: center;
+  border: 0;
+  outline: none;
+}
+
+/* Toggle Min / Seg */
+.scx-unit-toggle {
+  display: flex;
+  background: #f1f3f5;
+  border-radius: 999px;
+  padding: 3px;
+}
+
+.scx-unit-toggle button {
+  border: 0;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.scx-unit-toggle button.active {
+  background: #198754;
+  color: #fff;
+}
+
+/* Botón cerrar */
+.scx-close {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  color: #242323;
+  opacity: .8;
+}
+
+.scx-close:hover {
+  opacity: 1;
+}
+
+/* Hint debajo del label */
+.form-hint {
+  display: block;
+  font-size: .8rem;
+  color: #6c757d;
+  margin-bottom: 6px;
+}
+
+/* Botón principal */
+.scx-btn-primary {
+  padding: 10px 18px;
+  font-weight: 600;
+  border-radius: 10px;
+}

@@ -1,0 +1,130 @@
+.hidro-modal {
+  border-radius: 14px;
+  overflow: hidden;
+  animation: popIn .18s ease;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(-6px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+
+/* HEADER */
+.hidro-modal-header {
+  background: linear-gradient(135deg, #e8f5e9, #f1f8f5);
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.hidro-modal-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #d1f5e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #198754;
+  font-size: 22px;
+}
+
+/* icon circle variants */
+.icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  margin-right: .75rem;
+}
+.bg-green { background: #10b981; }
+.bg-blue { background: #0ea5e9; }
+.bg-yellow { background: #f59e0b; }
+.bg-teal { background: #06b6d4; }
+.bg-gray { background: #6b7280; }
+
+/* BODY */
+.hidro-modal-body {
+  padding-top: 1rem;
+}
+
+/* ESTADO */
+.estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .35rem .75rem;
+  border-radius: 20px;
+  font-size: .85rem;
+  font-weight: 600;
+}
+
+.libre {
+  background: #e6f4ea;
+  color: #047857;
+}
+
+.ocupado {
+  background: #e6f9ff;
+  color: #065f46;
+}
+
+.pausado {
+  background: #fff7ed;
+  color: #92400e;
+}
+
+/* INFO CARDS */
+.info-card {
+  display: flex;
+  gap: .75rem;
+  padding: .75rem;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #eef2f7;
+  height: 100%;
+}
+
+.info-card.full {
+  background: #fdfdfd;
+}
+
+.info-card .label {
+  font-size: .75rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.info-card .value {
+  font-weight: 600;
+  color: #111827;
+}
+
+.info-card .icon-circle i { font-size: 16px; }
+
+.info-card .label {
+  font-size: .75rem;
+  color: #6c757d;
+}
+
+/* full width info card */
+.info-card.full { background: #fbfdff; }
+
+.confirm-icon { width: 64px; height: 64px; border-radius: 18px; background: #ffecec; display:flex; align-items:center; justify-content:center; color:#dc3545; margin:0 auto; }
+
+/* FOOTER */
+.hidro-modal-footer {
+  background: #fafafa;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 576px) {
+  .hidro-modal-icon {
+    width: 40px;
+    height: 40px;
+  }
+}

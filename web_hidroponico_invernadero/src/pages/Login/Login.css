@@ -154,6 +154,17 @@
   background: rgba(255, 255, 255, .28);
 }
 
+/* variant: transparent hero button to blend with hero background */
+.hero-btn-transparent {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: white !important;
+  backdrop-filter: none;
+}
+.hero-btn-transparent:hover {
+  background: rgba(255,255,255,0.06) !important;
+}
+
 /* ===============================
        ICONOS & TITULOS
 ================================ */
