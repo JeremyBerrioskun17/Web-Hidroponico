@@ -36,7 +36,7 @@ export async function getCosechasStats() {
 }
 
 export async function finalizeCosecha(id) {
-  // Try to update estado to FINALIZADA; backend may support a dedicated endpoint.
-  const res = await api.put(`/api/cosechas/${id}`, { estado: 'FINALIZADA' });
+  // Use dedicated endpoint to finalizar cosecha
+  const res = await api.post(`/api/cosechas/finalizar/${id}`);
   return res.data;
 }

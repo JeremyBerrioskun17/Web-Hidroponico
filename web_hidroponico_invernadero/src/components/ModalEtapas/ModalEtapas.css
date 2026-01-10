@@ -1,18 +1,24 @@
+.modal-fancy .modal-content{border-radius:8px}
+.modal-fancy .modal-title{display:flex;align-items:center;gap:.5rem}
+.modal-fancy .table td, .modal-fancy .table th{vertical-align:middle}
+.modal-fancy .table tbody tr:hover{background:#f8fafc}
 .modal-fancy {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 12px 30px rgba(2,6,23,0.12);
+  padding: 6px 10px; /* tighter inner padding */
+  font-size: 1rem; /* base font slightly larger for readability */
 }
 
 .timeline {
   position: relative;
-  padding-left: 24px;
+  padding-left: 28px; /* smaller gutter */
 }
 
 .timeline:before {
   content: "";
   position: absolute;
-  left: 10px;
+  left: 22px;
   top: 0;
   bottom: 0;
   width: 2px;
@@ -20,33 +26,104 @@
 }
 
 .timeline-item {
-  position: relative;
-  padding: 12px 0 12px 20px;
-  display: flex;
+  /* use grid: left gutter for marker, middle for content, right for controls */
+  display: grid;
+  grid-template-columns: 36px 1fr 90px; /* narrower right column so content uses more width */
+  gap: 10px;
+  align-items: start;
+  margin-bottom: 8px;
+  padding: 6px 8px; /* tighter padding so cards extend more */
 }
 
 .timeline-marker {
-  position: absolute;
-  left: 0;
-  top: 12px;
-  width: 18px;
-  height: 18px;
-  border-radius: 6px;
+  position: relative;
+  justify-self: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
   background: #10b981;
-  box-shadow: 0 4px 12px rgba(16,185,129,0.18);
+  box-shadow: 0 6px 12px rgba(16,185,129,0.08);
+  border: 3px solid #fff;
+  box-sizing: content-box;
+  margin-top: 6px;
 }
 
 .timeline-item .timeline-content {
   flex: 1;
 }
 
-.timeline-title { font-weight: 700; }
-.timeline-sub { margin-top: 4px; }
+.timeline-title { font-weight: 700; font-size: 1.05rem; }
+.timeline-sub { margin-top: 4px; font-size: 0.95rem; }
 
 .timeline-item.pausada .timeline-marker { background: #f59e0b; }
 .timeline-item.finalizada .timeline-marker { background: #6b7280; }
 .timeline-item.activa .timeline-marker { background: #10b981; }
 
+/* Color the state-badge and progress bar according to the item's estado as well */
+.timeline-item.activa .state-badge { background: linear-gradient(90deg,#10b981,#059669); color:#fff; }
+.timeline-item.pendiente .state-badge, .timeline-item.pausada .state-badge { background: linear-gradient(90deg,#fef3c7,#fde68a); color:#92400e; }
+.timeline-item.finalizada .state-badge { background: #6b7280; color:#fff; }
+
+.timeline-progress-bar.activa { background: linear-gradient(90deg,#10b981,#34d399); }
+.timeline-progress-bar.pendiente, .timeline-progress-bar.pausada { background: linear-gradient(90deg,#fef3c7,#fde68a); }
+.timeline-progress-bar.finalizada { background: #9ca3af; }
+
 .scx-backdrop { z-index: 1100; }
 
 .modal-footer { border-top: 1px solid #eef2f7; }
+
+.timeline-item { background: #fff; border-radius: 8px; }
+.timeline-item:not(.finalizada):hover { background: #fbfdfb; }
+.timeline-times { color: #6b7280; margin-top:6px; font-size: 0.95rem; }
+.timeline-progress { background: #f1f5f9; height: 10px; border-radius: 6px; overflow: hidden; margin-top:6px; }
+.timeline-progress-bar { height: 100%; background: linear-gradient(90deg,#10b981,#34d399); width: 0%; transition: width .4s ease; }
+.timeline-item.activa { background: rgba(16,185,129,0.03); border-radius:6px; padding:10px; }
+.timeline-item.finalizada { opacity: 0.8; }
+.badge { font-weight:600; padding:6px 10px; border-radius:8px; font-size:0.9rem; }
+
+/* Estado badges */
+.modal-fancy .state-badge { display:inline-block; min-width:72px; text-align:center; padding:6px 8px; border-radius:8px; font-weight:700; }
+/* more specific selectors to override bootstrap .badge colors if present */
+.modal-fancy .timeline-item.activa .state-badge,
+.modal-fancy .state-badge.activa {
+  background: linear-gradient(90deg,#10b981,#059669) !important;
+  color:#fff !important;
+  box-shadow: 0 4px 10px rgba(16,185,129,0.08);
+}
+.modal-fancy .timeline-item.pendiente .state-badge,
+.modal-fancy .timeline-item.pausada .state-badge,
+.modal-fancy .state-badge.pendiente,
+.modal-fancy .state-badge.pausada {
+  background: linear-gradient(90deg,#fef3c7,#fde68a) !important;
+  color:#92400e !important;
+  box-shadow: 0 4px 8px rgba(250,204,21,0.06);
+}
+.modal-fancy .timeline-item.finalizada .state-badge,
+.modal-fancy .state-badge.finalizada {
+  background: #6b7280 !important;
+  color: #fff !important;
+  box-shadow: none;
+}
+.timeline .timeline-content > .d-flex { align-items:flex-start; }
+.timeline .timeline-content .ms-3 { width:90px; flex: 0 0 90px; text-align:right; }
+
+/* Make modal-lg wider so cards can expand more (applies to this dialog usage) */
+.modal-dialog.modal-lg { max-width: 1100px; }
+.timeline .timeline-content .ms-3 .badge { background: #f1f5f9; color: #374151; }
+.timeline .timeline-content .timeline-title { margin-bottom:6px; }
+
+/* Responsive: collapse right column on small screens */
+@media (max-width: 576px) {
+  .timeline-item { grid-template-columns: 36px 1fr; }
+  .timeline { padding-left: 44px; }
+  .timeline:before { left: 20px; }
+  .timeline .timeline-content .ms-3 { width: auto; text-align: left; order: 3; }
+}
+
+
+.timeline-times { color: #6b7280; }
+.timeline-progress { background: #f1f5f9; height: 8px; border-radius: 6px; overflow: hidden; margin-top:6px; }
+.timeline-progress-bar { height: 100%; background: linear-gradient(90deg,#10b981,#34d399); width: 0%; transition: width .4s ease; }
+.timeline-item.activa { background: rgba(16,185,129,0.03); border-radius:6px; padding:10px; }
+.timeline-item.finalizada { opacity: 0.8; }
+.badge { font-weight:600; padding:6px 8px; border-radius:8px; }

@@ -173,7 +173,8 @@
 ============================== */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* más flexible */
+  /* permitir cards más anchas en pantallas grandes pero mantener fallback responsivo */
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 20px;
   justify-content: center; /* centra las cards si hay pocas en pantalla grande */
   align-items: stretch;
@@ -187,12 +188,13 @@
   border: 1px solid var(--card-border);
   border-radius: 20px;
   box-shadow: 0 10px 28px rgba(15,23,42,0.08);
-  padding: 18px;
+  padding: 20px 22px;
   display: flex;
   flex-direction: column;
   transition: all 0.25s ease;
   width: 100%;
-  max-width: 480px; /* ancho máximo para desktop */
+  max-width: 720px; /* ancho máximo para desktop — aumentado */
+  position: relative;
 }
 
 .cosecha-card:hover {
@@ -205,7 +207,7 @@
 ============================== */
 .cosecha-main {
   display: flex;
-  gap: 16px;
+  gap: 12px;
 }
 
 @media (max-width: 991px) {
@@ -218,21 +220,27 @@
     height: 80px;
     font-size: 2rem;
   }
+  /* mobile: footer actions should be in normal flow */
+  .cosecha-card .hidroponico-actions {
+    position: static;
+    justify-content: center;
+    margin-top: 4px;
+  }
 }
 
 /* ==============================
    ICON (IMAGE REPLACEMENT)
 ============================== */
 .cosecha-icon {
-  width: 100px;
-  height: 100px;
-  border-radius: 22px;
+  width: 96px;
+  height: 96px;
+  border-radius: 18px;
   background: linear-gradient(135deg, #10b981, #22c55e);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 2.2rem;
+  font-size: 2rem;
   flex-shrink: 0;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
 }
@@ -245,6 +253,16 @@
   flex-direction: column;
   flex: 1;
   width: 100%;
+}
+
+/* place estado pill top-right like the mock */
+.cosecha-card .estado-pill {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
 }
 
 .cosecha-title {
@@ -265,15 +283,12 @@
 .cosecha-text {
   color: #374151;
   font-size: 0.88rem;
-  max-height: 60px;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* ==============================
-   STATUS PILL
+   STATUS PILL (scoped to cosecha cards)
 ============================== */
-.estado-pill {
+.cosecha-card .estado-pill {
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0.25rem 0.6rem;
@@ -281,9 +296,9 @@
   text-transform: uppercase;
 }
 
-.estado-pill.activa { background: #10b981; color: white; }
-.estado-pill.pausada { background: #f59e0b; color: white; }
-.estado-pill.finalizada { background: #6b7280; color: white; }
+.cosecha-card .estado-pill.activa { background: #10b981; color: white; }
+.cosecha-card .estado-pill.pausada { background: #f59e0b; color: white; }
+.cosecha-card .estado-pill.finalizada { background: #6b7280; color: white; }
 
 /* ==============================
    FOOTER ACTIONS
@@ -291,11 +306,10 @@
 .cosecha-footer {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: auto;
+  gap: 2px;
 }
 
-.btn-pill {
+.cosecha-card .btn-pill {
   border-radius: 999px;
   padding: .45rem 1.2rem;
   font-size: .85rem;
@@ -350,4 +364,162 @@
     flex-direction: column !important;
     align-items: flex-start;
   }
+}
+
+/* Increase label/font sizes inside the cosecha card for better readability */
+.cosecha-card h5 {
+  font-size: 20px;
+}
+.cosecha-card small,
+.cosecha-card .small {
+  font-size: 0.95rem;
+}
+.cosecha-card .cosecha-meta {
+  font-size: 0.95rem;
+}
+.cosecha-card .cosecha-text {
+  font-size: 0.95rem;
+}
+.cosecha-card .estado-pill {
+  font-size: 0.9rem;
+}
+.cosecha-card .btn-pill {
+  font-size: 0.95rem;
+  padding: .5rem 1.25rem;
+}
+.cosecha-card .small.text-muted.mt-1 {
+  font-size: 0.9rem;
+}
+
+/* Informational labels inside card */
+.info-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-labels .info-item {
+  font-size: 0.95rem;
+  color: #374151;
+}
+.info-labels .info-item .fw-semibold {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Make labels visually match the harvest title */
+.cosecha-card .info-labels .info-item .fw-semibold,
+.cosecha-card .cosecha-label {
+  font-size: 20px; /* match .cosecha-card h5 */
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Data values (the actual DB-extracted text) — match title size but muted color */
+.info-labels .info-item .text-muted,
+.info-labels .info-item span.text-muted,
+.info-labels .info-item .info-comment {
+  font-size: 20px;
+  color: #475569;
+}
+.info-labels .info-item i {
+  width: 26px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+/* Comment block: allow long text, wrap and provide margin */
+.info-comment {
+  max-width: 60ch;
+  white-space: normal;
+  word-break: break-word;
+  margin-top: 4px;
+  color: #374151;
+}
+
+/* Make the 'Zafra' label match other label sizes */
+.cosecha-card .cosecha-label,
+.cosecha-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+/* Keep Zafra green when text-success is applied and make it slightly larger */
+.cosecha-label.text-success,
+.cosecha-card .cosecha-label.text-success {
+  color: var(--accent) !important;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+/* Zafra row: label and name inline */
+.zafra-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Divider under comment */
+.comment-divider {
+  border: none;
+  height: 1px;
+  background: rgba(15,23,42,0.06);
+  margin: 8px 0 12px 0;
+}
+
+/* Etapa label larger */
+.etapa-current .etapa-label {
+  font-size: 18px;
+  color: #374151;
+  margin-bottom: 6px;
+}
+/* progress style: full width and rounded like mock */
+.cosecha-card .progress-custom {
+  width: 100%;
+  background: #e9f6f0;
+  border-radius: 999px;
+  overflow: hidden;
+  height: 12px;
+}
+.cosecha-card .progress-custom > div {
+  height: 100%;
+  background: var(--accent);
+  transition: width .3s ease;
+}
+
+/* Footer buttons centered and spacing (scoped to cosecha cards) */
+.cosecha-card .hidroponico-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 0; /* eliminado margen superior para juntar botones */
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+}
+
+@media (min-width: 992px) {
+  .cosecha-card { flex-direction: row; align-items: stretch; }
+  .cosecha-card .cosecha-icon { margin-right: 16px; }
+  .cosecha-card .flex-grow-1 { width: calc(100% - 112px); }
+  .cosecha-card .cosecha-body { display: flex; flex-direction: column; }
+  /* leave space at bottom so absolute footer doesn't overlap content */
+  .cosecha-card .cosecha-body { padding-bottom: 64px; }
+}
+
+/* Slightly larger estado pill to match mock */
+.cosecha-card .estado-pill {
+  padding: 8px 14px;
+  font-size: 0.85rem;
 }

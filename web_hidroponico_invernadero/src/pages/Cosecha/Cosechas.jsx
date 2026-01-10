@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { listCosechas } from "../../services/cosechas";
 import { listHydroponicos } from "../../services/hidroponicos";
+import { listEtapasHidroponico } from "../../services/etapasHidroponico";
 import ModalNuevoCosecha from "../../components/ModalNuevaCosecha/ModalNuevoCosecha";
 import ModalDetalleCosecha from "../../components/ModalDetalleCosecha/ModalDetalleCosecha";
 import ModalEtapas from "../../components/ModalEtapas/ModalEtapas";
@@ -19,8 +20,13 @@ export default function Cosechas() {
   const [selectedCosecha, setSelectedCosecha] = useState(null);
   const [etapasCosecha, setEtapasCosecha] = useState({ show: false, cosecha: null });
 
+  const [stats, setStats] = useState({ count: 0, totalCount: 0, byState: { ACTIVA: 0, PAUSADA: 0, FINALIZADA: 0, OTROS: 0 }, pct: { activa: 0, pausada: 0, finalizada: 0 } });
+  const [statsLoading, setStatsLoading] = useState(false);
+  const [statsError, setStatsError] = useState(null);
+
 
   const [hidros, setHidros] = useState([]);
+  const [etapasGlobal, setEtapasGlobal] = useState([]);
   const [localFilters, setLocalFilters] = useState({
     q: "",
     desde: "",
@@ -38,6 +44,17 @@ export default function Cosechas() {
         let itemsH = Array.isArray(res) ? res : (res.items || []);
         setHidros(itemsH);
       } catch {}
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const all = await listEtapasHidroponico();
+        setEtapasGlobal(Array.isArray(all) ? all : (all.items || []));
+      } catch (err) {
+        setEtapasGlobal([]);
+      }
     })();
   }, []);
 
@@ -105,7 +122,7 @@ export default function Cosechas() {
 }
 
 
-  const stats = useMemo(() => {
+  const computedStats = useMemo(() => {
     const cnt = items.length;
     const byState = { ACTIVA: 0, PAUSADA: 0, FINALIZADA: 0, OTROS: 0 };
     items.forEach(i => {
@@ -280,7 +297,7 @@ export default function Cosechas() {
               {visibleItems.map(c => (
                 <div key={c.id} className="cosecha-card cosecha-card-xl">
 
-                  <div className="d-flex flex-column flex-lg-row align-items-center">
+                  <div className="cosecha-main d-flex flex-column flex-lg-row align-items-center">
 
                     {/* ICONO */}
                     <div className="cosecha-icon mb-3 mb-lg-0">
@@ -288,36 +305,105 @@ export default function Cosechas() {
                     </div>
 
                     {/* CONTENIDO */}
-                    <div className="flex-grow-1 ms-lg-4 w-100">
+                    <div className="cosecha-body flex-grow-1 ms-lg-2 w-100">
 
                       {/* HEADER */}
                       <div className="d-flex flex-wrap justify-content-between align-items-start mb-2">
-                        <div>
-                          <small className="text-success fw-semibold">Cosecha</small>
-                          <h5 className="fw-bold mb-1">{c.nombreZafra || "Zafra sin nombre"}</h5>
+                          <div className="zafra-row">
+                            <small className="text-success fw-semibold cosecha-label"><i className="fas fa-seedling me-1" />Zafra:</small>
+                            <h5 className="cosecha-title fw-bold mb-0">{c.nombreZafra || "Zafra sin nombre"}</h5>
+                          </div>
+                        {(() => {
+                          const ordered = (etapasGlobal || []).filter(e => !e.hidroponicoId || e.hidroponicoId === c.hidroponicoId).slice().sort((a, b) => (a.ordenEtapa ?? a.OrdenEtapa ?? 0) - (b.ordenEtapa ?? b.OrdenEtapa ?? 0));
+                          const start = c.fechaInicio ? new Date(c.fechaInicio) : new Date();
+                          const now = new Date();
+                          const computed = [];
+                          let cur = new Date(start);
+                          for (const etapa of ordered) {
+                            const dur = Number(etapa.duracionHoras ?? etapa.DuracionHoras ?? 0) || 0;
+                            const inicio = new Date(cur);
+                            const fin = new Date(inicio);
+                            fin.setHours(fin.getHours() + dur);
+                            let estado = (etapa.estado ?? etapa.estadoEtapa ?? 'PENDIENTE').toUpperCase();
+                            const estadoByDate = (now >= fin) ? 'FINALIZADA' : (now >= inicio && now < fin ? 'ACTIVA' : 'PENDIENTE');
+                            computed.push({ nombre: etapa.nombre, estado, estadoByDate, duracionHorasPlan: dur, fechaInicioReal: inicio.toISOString(), fechaFinReal: fin.toISOString() });
+                            cur = new Date(fin);
+                          }
+                          // Use the cosecha's state directly (comes from API)
+                          const displayEstado = (c.estado || 'SIN ESTADO').toUpperCase();
+                          const pillClass = displayEstado.toLowerCase();
+                          return <span className={`estado-pill ${pillClass}`}>{displayEstado}</span>;
+                        })()}
+                      </div>
+
+                      
+
+                      {/* INFO LABELS (comentario mostrado aquí, sin duplicados) */}
+                      <div className="info-labels d-flex flex-column align-items-start mb-2">
+                        <div className="info-item d-flex align-items-center">
+                          <i className="fas fa-warehouse me-2 text-muted"></i>
+                          <span className="fw-semibold">Hidroponico:</span>
+                          <span className="text-muted ms-1">{c.hidroponicoId ?? '—'}</span>
                         </div>
-                        <span className={`estado-pill ${c.estado?.toLowerCase()}`}>{c.estado}</span>
+                        <div className="info-item d-flex align-items-center">
+                          <i className="fas fa-calendar-alt me-2 text-muted"></i>
+                          <span className="fw-semibold">Fechas:</span>
+                          <span className="text-muted ms-1">{fmtFechaLabel(c.fechaInicio)} → {fmtFechaLabel(c.fechaFin)}</span>
+                        </div>
+                        <div className="info-item d-flex align-items-start">
+                          <i className="fas fa-comment me-2 text-muted"></i>
+                          <div>
+                            <div className="fw-semibold">Comentario:</div>
+                            <div className="text-muted info-comment">{c.observaciones ? c.observaciones : '—'}</div>
+                          </div>
+                        </div>
                       </div>
+                      <hr className="comment-divider" />
 
-                      {/* META – HIDROPÓNICO */}
-                      <div className="mb-2 text-muted small d-flex align-items-center">
-                        <i className="fas fa-warehouse me-2"></i>
-                        Hidropónico: <strong className="ms-1">{c.hidroponicoId ?? "—"}</strong>
-                      </div>
-
-                      {/* META – FECHAS */}
-                      <div className="mb-3 text-muted small d-flex align-items-center">
-                        <i className="fas fa-calendar-alt me-2"></i>
-                        {fmtFecha(c.fechaInicio)} → {fmtFecha(c.fechaFin)}
-                      </div>
-
-                      {/* OBSERVACIONES */}
-                      <p className="cosecha-text mb-3">{c.observaciones || "Sin observaciones registradas"}</p>
+                      {(() => {
+                        const ordered = (etapasGlobal || []).filter(e => !e.hidroponicoId || e.hidroponicoId === c.hidroponicoId).slice().sort((a, b) => (a.ordenEtapa ?? a.OrdenEtapa ?? 0) - (b.ordenEtapa ?? b.OrdenEtapa ?? 0));
+                        const start = c.fechaInicio ? new Date(c.fechaInicio) : new Date();
+                        const now = new Date();
+                        const computed = [];
+                        let cur = new Date(start);
+                        for (const etapa of ordered) {
+                          const dur = Number(etapa.duracionHoras ?? etapa.DuracionHoras ?? 0) || 0;
+                          const inicio = new Date(cur);
+                          const fin = new Date(inicio);
+                          fin.setHours(fin.getHours() + dur);
+                          let estado = (etapa.estado ?? etapa.estadoEtapa ?? 'PENDIENTE').toUpperCase();
+                          const estadoByDate = (now >= fin) ? 'FINALIZADA' : (now >= inicio && now < fin ? 'ACTIVA' : 'PENDIENTE');
+                          computed.push({ nombre: etapa.nombre, estado, estadoByDate, duracionHorasPlan: dur, fechaInicioReal: inicio.toISOString(), fechaFinReal: fin.toISOString() });
+                          cur = new Date(fin);
+                        }
+                        const totalHours = computed.reduce((s, it) => s + (Number(it.duracionHorasPlan) || 0), 0);
+                        const elapsedHours = computed.reduce((s, it) => {
+                          const inicio = new Date(it.fechaInicioReal);
+                          const fin = new Date(it.fechaFinReal);
+                          if (now >= fin) return s + (Number(it.duracionHorasPlan) || 0);
+                          if (now <= inicio) return s;
+                          const hrs = (now - inicio) / (1000 * 60 * 60);
+                          return s + Math.min(hrs, Number(it.duracionHorasPlan) || 0);
+                        }, 0);
+                        let overallPct = totalHours > 0 ? Math.round((elapsedHours / totalHours) * 100) : 0;
+                        if ((c.estado || '').toUpperCase() === 'FINALIZADA') overallPct = 100;
+                        const currentIndex = computed.findIndex(it => it.estadoByDate === 'ACTIVA');
+                        const currentName = currentIndex >= 0 ? computed[currentIndex].nombre : (computed.length > 0 ? (computed[computed.length - 1].estadoByDate === 'FINALIZADA' ? 'Finalizada' : 'Sin etapa activa') : 'Sin etapas');
+                          return (
+                          <div className="mb-2 etapa-current">
+                            <div className="etapa-label">Etapa actual: <strong>{currentName}</strong></div>
+                            <div className="progress-custom mt-2">
+                              <div style={{ width: `${overallPct}%` }} />
+                            </div>
+                            <div className="small text-muted mt-1">{overallPct}%</div>
+                          </div>
+                        );
+                      })()}
 
                       <hr />
 
                       {/* FOOTER / ACCIONES - reused hidroponico button styles */}
-                      <div className="hidroponico-actions mt-3">
+                      <div className="cosecha-footer hidroponico-actions">
                         <button
                           className="btn btn-outline-secondary btn-pill"
                           onClick={() => setSelectedCosecha(c)}
@@ -333,7 +419,7 @@ export default function Cosechas() {
                         </button>
 
                         <button className="btn btn-outline-danger btn-pill">
-                          <i className="fas fa-trash"></i>
+                          <i className="fas fa-trash me-1"></i> Eliminar
                         </button>
                       </div>
 

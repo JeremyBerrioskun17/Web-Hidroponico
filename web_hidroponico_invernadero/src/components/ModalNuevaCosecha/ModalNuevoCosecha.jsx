@@ -182,7 +182,11 @@ export default function ModalNuevoCosecha({ onCreated }) {
       });
       closeModal();
     } catch (err) {
-      setError(err?.message || "Error creando cosecha.");
+      // Try to extract server error payload (may be string or object)
+      console.error("createCosecha error:", err);
+      const srv = err?.response?.data ?? err?.response?.data?.message;
+      const msg = srv ? (typeof srv === "string" ? srv : JSON.stringify(srv)) : (err?.message || "Error creando cosecha.");
+      setError(msg);
     } finally {
       setLoading(false);
     }
