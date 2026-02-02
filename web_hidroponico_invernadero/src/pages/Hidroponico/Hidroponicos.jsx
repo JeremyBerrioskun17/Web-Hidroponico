@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { listHydroponicos, deleteHydroponico } from "../../services/hidroponicos";
 import { toast } from "react-toastify";
 import ModalNuevoHidroponico from "../../components/ModalNuevoHidroponico/ModalNuevoHidroponico";
@@ -8,9 +8,9 @@ import "./Hidroponico.css";
 const PAGE_SIZE = 8;
 
 const ESTADO_MAP = {
-  0: { label: "Libre", class: "libre" },
-  1: { label: "Ocupado", class: "ocupado" },
-  2: { label: "Pausado", class: "pausado" }
+  0: { label: "Libre", class: "libre", icon: "fa-check-circle" },
+  1: { label: "Ocupado", class: "ocupado", icon: "fa-leaf" },
+  2: { label: "Pausado", class: "pausado", icon: "fa-tools" }
 };
 
 const CLEAN_FILTERS = {
@@ -36,8 +36,6 @@ function toEstadoCode(raw) {
 }
 
 function normalizeHidro(h) {
-  // Normalizamos campos para evitar múltiples fallback en el render.
-  // No altera funcionalidad: solo homogeniza lecturas.
   return {
     ...h,
     numeroHidroponico: h.numeroHidroponico ?? h.NumeroHidroponico ?? h.numero ?? null,
@@ -94,6 +92,22 @@ export default function Hidroponicos() {
   const [localFilters, setLocalFilters] = useState(CLEAN_FILTERS);
   const [applied, setApplied] = useState(CLEAN_FILTERS);
 
+  // ✅ recarga cuando creas/actualizas/eliminas
+  const [refreshKey, setRefreshKey] = useState(0);
+  const bumpRefresh = useCallback(() => setRefreshKey((k) => k + 1), []);
+
+  const handleCloseDetalle = useCallback(() => setSelectedHidro(null), []);
+
+  // debug helper: wrap selection to log the object passed to the detail modal
+  function showDetalle(h) {
+    try {
+      console.log("[debug] opening detalle for:", h);
+      // expose for quick inspection in DevTools
+      window.__dbg_selectedHidro = h;
+    } catch (e) {}
+    setSelectedHidro(h);
+  }
+
   /* ==============================
      DATA LOAD
   ============================== */
@@ -103,7 +117,6 @@ export default function Hidroponicos() {
         setLoading(true);
         setError(null);
 
-        // Params se conservan (por si luego conectas API paginada/filtrada)
         const params = {
           page,
           pageSize: PAGE_SIZE,
@@ -122,7 +135,7 @@ export default function Hidroponicos() {
         setLoading(false);
       }
     })();
-  }, [page, applied]);
+  }, [page, applied, refreshKey]);
 
   /* ==============================
      BODY SCROLL LOCK FOR CONFIRM MODAL
@@ -166,7 +179,6 @@ export default function Hidroponicos() {
     const estadoFilter = mapEstadoString(af.estado);
 
     return (items || []).filter((it) => {
-      // Texto: nombre / observaciones
       if (af.texto) {
         const q = String(af.texto).toLowerCase();
         const n = String(it.nombre || "").toLowerCase();
@@ -202,7 +214,7 @@ export default function Hidroponicos() {
   }, [items, applied]);
 
   /* ==============================
-     PAGINATION (based on filtered list)
+     PAGINATION
   ============================== */
   const filteredTotal = visibleItems.length;
   const totalPages = Math.max(1, Math.ceil(filteredTotal / PAGE_SIZE));
@@ -212,13 +224,12 @@ export default function Hidroponicos() {
     return visibleItems.slice(start, start + PAGE_SIZE);
   }, [visibleItems, page]);
 
-  // Si cambian filtros y la página queda fuera de rango, ajusta
   useEffect(() => {
     if (page > totalPages) setPage(totalPages);
   }, [page, totalPages]);
 
   /* ==============================
-     METRICS (for stats)
+     METRICS
   ============================== */
   const stats = useMemo(() => {
     const totalCount = items.length;
@@ -262,11 +273,13 @@ export default function Hidroponicos() {
     try {
       setLoading(true);
       await deleteHydroponico(h.id);
-      setItems((prev) => prev.filter((p) => p.id !== h.id));
+
       toast.success(`${h.nombre || `Hidro #${h.id}`} eliminado.`, {
         hideProgressBar: true,
         theme: "colored"
       });
+
+      bumpRefresh();
     } catch (err) {
       toast.error(err?.message || "Error eliminando el hidropónico", {
         hideProgressBar: true,
@@ -303,16 +316,17 @@ export default function Hidroponicos() {
   /* ==============================
      CREATE/UPDATE HANDLERS
   ============================== */
-  function handleCreated(created) {
-    setItems((prev) => [normalizeHidro(created), ...prev]);
-    setPage(1);
+  function handleCreated() {
     toast.success("Hidropónico creado.", { hideProgressBar: true, theme: "colored" });
+    setEditingHidro(null);
+    setPage(1);
+    bumpRefresh();
   }
 
-  function handleUpdated(updated) {
-    const u = normalizeHidro(updated);
-    setItems((prev) => prev.map((p) => (p.id === u.id ? u : p)));
+  function handleUpdated() {
+    toast.success("Hidropónico actualizado.", { hideProgressBar: true, theme: "colored" });
     setEditingHidro(null);
+    bumpRefresh();
   }
 
   /* ==============================
@@ -320,9 +334,7 @@ export default function Hidroponicos() {
   ============================== */
   return (
     <div className="container-fluid py-2 hidroponicos-page">
-      {/* ==============================
-          HEADER
-      ============================== */}
+      {/* HEADER */}
       <div className="header-row flex-wrap gap-2">
         <div className="page-title">
           <div className="title-icon">
@@ -344,71 +356,68 @@ export default function Hidroponicos() {
 
           <button
             type="button"
-            className="btn btn-outline-secondary"
-            onClick={() => exportCsv(visibleItems)} // exporta TODO lo filtrado
+            className="btn btn-outline-secondary btn-ui"
+            onClick={() => exportCsv(visibleItems)}
           >
-            <i className="fas fa-file-export me-1" />
+            <i className="fas fa-file-export me-2" />
             Exportar
           </button>
         </div>
       </div>
 
-      {/* ==============================
-          STATS
-      ============================== */}
-      <div className="stats-row flex-wrap">
-        <div className="stat-card">
-          <div className="stat-icon bg-success-soft big">
+      {/* STATS */}
+      <div className="stats-row">
+        <div className="stat-card stat-total">
+          <div className="stat-icon">
             <i className="fas fa-layer-group" />
           </div>
           <div className="stat-content">
+            <div className="stat-title">Total</div>
             <div className="stat-value">{stats.totalCount}</div>
-            <div className="stat-label">Total</div>
             <div className="stat-sub">
-              Activos: {stats.occupiedCount} — {stats.pctOccupied}% · Bandejas totales: {stats.totalBandejas}
+              Activos: <b>{stats.occupiedCount}</b> · Ocupación: <b>{stats.pctOccupied}%</b>
             </div>
-            <div className="progress-thin mt-2">
+            <div className="progress-thin">
               <div style={{ width: `${stats.pctOccupied}%` }} />
             </div>
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="stat-icon bg-info-soft big">
+        <div className="stat-card stat-free">
+          <div className="stat-icon">
             <i className="fas fa-check-circle" />
           </div>
           <div className="stat-content">
+            <div className="stat-title">Libres</div>
             <div className="stat-value">{stats.freeCount}</div>
-            <div className="stat-label">Libres</div>
             <div className="stat-sub">
-              {stats.pctFree}% del total · Bandejas libres: {stats.freeBandejas}
+              Bandejas libres: <b>{stats.freeBandejas}</b> · <b>{stats.pctFree}%</b> del total
             </div>
-            <div className="progress-thin mt-2">
+            <div className="progress-thin">
               <div style={{ width: `${stats.pctFree}%` }} />
             </div>
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="stat-icon bg-warning-soft big">
+        <div className="stat-card stat-maint">
+          <div className="stat-icon">
             <i className="fas fa-tools" />
           </div>
           <div className="stat-content">
+            <div className="stat-title">Mantenimiento</div>
             <div className="stat-value">{stats.maintCount}</div>
-            <div className="stat-label">Mantenimiento</div>
             <div className="stat-sub">
-              {stats.pctMaint}% del total · Ej: {stats.maintNames.length ? stats.maintNames.join(", ") : "—"}
+              <b>{stats.pctMaint}%</b> del total · Ej:{" "}
+              {stats.maintNames.length ? <b>{stats.maintNames.join(", ")}</b> : "—"}
             </div>
-            <div className="progress-thin mt-2">
+            <div className="progress-thin">
               <div style={{ width: `${stats.pctMaint}%` }} />
             </div>
           </div>
         </div>
       </div>
 
-      {/* ==============================
-          FILTERS
-      ============================== */}
+      {/* FILTERS */}
       <div className="filters-section">
         <div className="filters-card">
           <form
@@ -420,77 +429,115 @@ export default function Hidroponicos() {
             <div className="row g-2 align-items-end">
               <div className="col-md-3">
                 <label>Nombre</label>
-                <input
-                  className="form-control"
-                  placeholder="Nombre del hidropónico"
-                  value={localFilters.nombre}
-                  onChange={(e) => setLocalFilters((s) => ({ ...s, nombre: e.target.value }))}
-                />
+                <div className="input-group input-group-soft">
+                  <span className="input-group-text">
+                    <i className="fas fa-tag" />
+                  </span>
+                  <input
+                    className="form-control"
+                    placeholder="Nombre del hidropónico"
+                    value={localFilters.nombre}
+                    onChange={(e) => setLocalFilters((s) => ({ ...s, nombre: e.target.value }))}
+                  />
+                </div>
+                <div className="form-hint">Filtra por el nombre del sistema hidropónico.</div>
               </div>
 
               <div className="col-md-2">
                 <label>Número</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  placeholder="#"
-                  value={localFilters.numero}
-                  onChange={(e) => setLocalFilters((s) => ({ ...s, numero: e.target.value }))}
-                />
+                <div className="input-group input-group-soft">
+                  <span className="input-group-text">
+                    <i className="fas fa-hashtag" />
+                  </span>
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="#"
+                    value={localFilters.numero}
+                    onChange={(e) => setLocalFilters((s) => ({ ...s, numero: e.target.value }))}
+                  />
+                </div>
+                <div className="form-hint">Número exacto del hidroponico.</div>
               </div>
 
               <div className="col-md-3">
                 <label>Estado</label>
-                <select
-                  className="form-select"
-                  value={localFilters.estado}
-                  onChange={(e) => setLocalFilters((s) => ({ ...s, estado: e.target.value }))}
-                >
-                  <option value="">Todos</option>
-                  <option value="0">Libre</option>
-                  <option value="1">Ocupado</option>
-                  <option value="2">Pausado</option>
-                </select>
+                <div className="input-group input-group-soft">
+                  <span className="input-group-text">
+                    <i className="fas fa-signal" />
+                  </span>
+                  <select
+                    className="form-select select-soft"
+                    value={localFilters.estado}
+                    onChange={(e) => setLocalFilters((s) => ({ ...s, estado: e.target.value }))}
+                  >
+                    <option value="">Todos</option>
+                    <option value="0">Libre</option>
+                    <option value="1">Ocupado</option>
+                    <option value="2">Pausado</option>
+                  </select>
+                </div>
+                <div className="form-hint">Filtra por disponibilidad del módulo.</div>
               </div>
 
               <div className="col-md-2">
                 <label>Bandejas min</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={localFilters.bandejasMin}
-                  onChange={(e) => setLocalFilters((s) => ({ ...s, bandejasMin: e.target.value }))}
-                />
+                <div className="input-group input-group-soft">
+                  <span className="input-group-text">
+                    <i className="fas fa-sort-amount-up" />
+                  </span>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={localFilters.bandejasMin}
+                    onChange={(e) => setLocalFilters((s) => ({ ...s, bandejasMin: e.target.value }))}
+                  />
+                </div>
+                <div className="form-hint">Mínimo de bandejas para mostrar.</div>
               </div>
 
               <div className="col-md-2">
                 <label>Bandejas max</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={localFilters.bandejasMax}
-                  onChange={(e) => setLocalFilters((s) => ({ ...s, bandejasMax: e.target.value }))}
-                />
+                <div className="input-group input-group-soft">
+                  <span className="input-group-text">
+                    <i className="fas fa-sort-amount-down" />
+                  </span>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={localFilters.bandejasMax}
+                    onChange={(e) => setLocalFilters((s) => ({ ...s, bandejasMax: e.target.value }))}
+                  />
+                </div>
+                <div className="form-hint">Límite superior de bandejas.</div>
               </div>
 
               <div className="col-12 mt-2">
                 <label>Buscar (texto)</label>
-                <input
-                  className="form-control"
-                  placeholder="Nombre / observaciones"
-                  value={localFilters.texto}
-                  onChange={(e) => setLocalFilters((s) => ({ ...s, texto: e.target.value }))}
-                />
+                <div className="input-group input-group-soft">
+                  <span className="input-group-text">
+                    <i className="fas fa-search" />
+                  </span>
+                  <input
+                    className="form-control"
+                    placeholder="Nombre / observaciones"
+                    value={localFilters.texto}
+                    onChange={(e) => setLocalFilters((s) => ({ ...s, texto: e.target.value }))}
+                  />
+                </div>
+                <div className="form-hint">
+                  Busca coincidencias en <b>nombre</b> u <b>observaciones</b>.
+                </div>
               </div>
 
               <div className="col-12 d-flex justify-content-end mt-3 gap-2">
-                <button type="button" className="btn btn-outline-secondary" onClick={clearFilters}>
-                  <i className="fas fa-eraser me-1" />
+                <button type="button" className="btn btn-outline-secondary btn-ui" onClick={clearFilters}>
+                  <i className="fas fa-eraser me-2" />
                   Limpiar
                 </button>
 
-                <button type="submit" className="btn btn-success btn-pill">
-                  <i className="fas fa-check me-1" />
+                <button type="submit" className="btn btn-success btn-ui btn-ui-primary">
+                  <i className="fas fa-check me-2" />
                   Aplicar filtros
                 </button>
               </div>
@@ -498,15 +545,12 @@ export default function Hidroponicos() {
           </form>
         </div>
 
-        {/* small helper */}
         <div className="filters-hint">
           Mostrando <b>{filteredTotal}</b> resultado(s) {filteredTotal ? "filtrado(s)" : ""}.
         </div>
       </div>
 
-      {/* ==============================
-          CARDS
-      ============================== */}
+      {/* CARDS */}
       <div className="content-row py-4">
         <div className="list-column">
           {loading ? (
@@ -521,87 +565,124 @@ export default function Hidroponicos() {
             <div className="cards-grid">
               {pagedItems.map((h) => {
                 const code = toEstadoCode(h.estado);
-                const meta = ESTADO_MAP[code] || { label: "Desconocido", class: "inactivo" };
+                const meta =
+                  ESTADO_MAP[code] || {
+                    label: "Desconocido",
+                    class: "inactivo",
+                    icon: "fa-question-circle"
+                  };
 
                 const isFree = toEstadoCode(h.estado) === 0;
 
                 return (
-                  <div key={h.id} className="hidroponico-card">
-                    <div className="hidroponico-main">
-                      <div className="hidroponico-icon hidroponico-icon-lg">
+                  <div key={h.id} className="hidroponico-card hidroponico-card-pro">
+                    {/* CARD HEADER */}
+                    <div className="hidro-card-top">
+                      <div className="hidro-card-type">
+                        <span className="type-icon">
+                          <i className="fas fa-seedling" />
+                        </span>
+                        <span className="type-text">Hidropónico</span>
+                      </div>
+
+                      <span className={`estado-pill ${meta.class}`}>
+                        <i className={`fas ${meta.icon} me-2`} />
+                        {meta.label}
+                      </span>
+                    </div>
+
+                    {/* CARD MAIN */}
+                    <div className="hidro-card-main">
+                      <div className="hidro-card-icon">
                         <i className="fas fa-water" />
                       </div>
 
-                      <div className="hidroponico-body">
-                        <div className="d-flex justify-content-between align-items-start mb-1">
-                          <div>
-                            <small className="text-success fw-semibold">Hidropónico</small>
-                            <div className="hidroponico-title">{h.nombre || `Hidro #${h.id}`}</div>
-                            <div className="hidroponico-sub">{h.ubicacion || h.zona || "—"}</div>
-                          </div>
+                      <div className="hidro-card-body">
+                        <div className="hidro-card-head">
+                          <div className="hidroponico-title">{h.nombre || `Hidro #${h.id}`}</div>
 
-                          <span className={`estado-pill ${meta.class}`}>{meta.label}</span>
+                          <div className="hidroponico-sub">
+                            <i className="fas fa-map-marker-alt me-2" />
+                            {h.localizacionNombre || h.ubicacion || h.zona || "—"}
+                          </div>
                         </div>
 
-                        <div className="hidroponico-meta mb-2">
+                        <div className="hidroponico-meta">
                           <div className="meta-item">
-                            <i className="fas fa-layer-group me-1" />
-                            {h.cantidadBandejas ?? "—"} bandejas
+                            <i className="fas fa-layer-group" />
+                            <span>
+                              <b>{h.cantidadBandejas ?? "—"}</b> bandejas
+                            </span>
                           </div>
+
                           <div className="meta-item">
-                            <i className="fas fa-calendar-alt me-1" />
-                            {h.creadoEn
-                              ? new Date(h.creadoEn).toLocaleDateString()
-                              : h.ultimaLectura
-                              ? new Date(h.ultimaLectura).toLocaleString()
-                              : "Sin fecha"}
+                            <i className="fas fa-hashtag" />
+                            <span>
+                              Nº <b>{h.numeroHidroponico ?? "—"}</b>
+                            </span>
                           </div>
+
+                          <div className="meta-item">
+                            <i className="fas fa-calendar-alt" />
+                            <span>
+                              {h.creadoEn
+                                ? new Date(h.creadoEn).toLocaleDateString()
+                                : h.ultimaLectura
+                                ? new Date(h.ultimaLectura).toLocaleString()
+                                : "Sin fecha"}
+                            </span>
+                          </div>
+
+                          {h.responsable && (
+                            <div className="meta-item">
+                              <i className="fas fa-user" />
+                              <span>{h.responsable}</span>
+                            </div>
+                          )}
+
+                          {Array.isArray(h.sensores) && (
+                            <div className="meta-item">
+                              <i className="fas fa-microchip" />
+                              <span>{h.sensores.length} sensores</span>
+                            </div>
+                          )}
                         </div>
 
-                        <div className="hidroponico-text mt-2">
-                          {h.observaciones || "Sin observaciones registradas"}
-                        </div>
-
-                        <div className="hidroponico-db-meta mt-2 small text-muted d-flex flex-wrap gap-3">
-                          <div>Nº: {h.numeroHidroponico ?? "—"}</div>
-                          {h.capacidadBandejas != null && <div>Capacidad: {h.capacidadBandejas}</div>}
-                          {h.responsable && <div>Resp: {h.responsable}</div>}
-                          {Array.isArray(h.sensores) && <div>{h.sensores.length} sensores</div>}
-                        </div>
-
-                        <div className="hidroponico-actions mt-3">
-                          <button
-                            type="button"
-                            className="btn btn-outline-secondary btn-pill"
-                            onClick={() => setSelectedHidro(h)}
-                          >
-                            <i className="fas fa-eye" />
-                            Detalle
-                          </button>
-
-                          <button
-                            type="button"
-                            className="btn btn-outline-primary btn-pill"
-                            onClick={() => setEditingHidro(h)}
-                          >
-                            <i className="fas fa-edit" />
-                            Editar
-                          </button>
-
-                          <button
-                            type="button"
-                            className={`btn ${
-                              isFree ? "btn-outline-danger" : "btn-outline-secondary"
-                            } btn-pill ms-2`}
-                            onClick={() => (isFree ? showConfirm(h) : null)}
-                            title={isFree ? "" : "Sólo se puede eliminar si está libre"}
-                            disabled={!isFree}
-                          >
-                            <i className="fas fa-trash" />
-                            Eliminar
-                          </button>
+                        {/* Observaciones */}
+                        <div className="obs-box">
+                          <div className="obs-title">
+                            <i className="fas fa-align-left" />
+                            Observaciones
+                          </div>
+                          <div className="hidroponico-text">
+                            {h.observaciones || "Sin observaciones registradas"}
+                          </div>
                         </div>
                       </div>
+                    </div>
+
+                    {/* CARD FOOTER */}
+                    <div className="hidro-card-footer">
+                      <button type="button" className="btn btn-outline-secondary btn-ui" onClick={() => showDetalle(h)}>
+                        <i className="fas fa-eye me-2" />
+                        Detalle
+                      </button>
+
+                      <button type="button" className="btn btn-outline-primary btn-ui" onClick={() => setEditingHidro(h)}>
+                        <i className="fas fa-edit me-2" />
+                        Editar
+                      </button>
+
+                      <button
+                        type="button"
+                        className={`btn ${isFree ? "btn-outline-danger" : "btn-outline-secondary"} btn-ui`}
+                        onClick={() => (isFree ? showConfirm(h) : null)}
+                        title={isFree ? "" : "Sólo se puede eliminar si está libre"}
+                        disabled={!isFree}
+                      >
+                        <i className="fas fa-trash me-2" />
+                        Eliminar
+                      </button>
                     </div>
                   </div>
                 );
@@ -616,42 +697,61 @@ export default function Hidroponicos() {
         </div>
       </div>
 
-      {/* ==============================
-          MODAL DETALLE
-      ============================== */}
-      {selectedHidro && (
-        <ModalDetalleHidroponico
-          show={!!selectedHidro}
-          hidro={selectedHidro}
-          onClose={() => setSelectedHidro(null)}
-        />
-      )}
+      {/* MODAL DETALLE */}
+      <ModalDetalleHidroponico show={!!selectedHidro} hidro={selectedHidro} onClose={handleCloseDetalle} />
 
-      {/* ==============================
-          CONFIRM DELETE MODAL
-      ============================== */}
+      {/* CONFIRM DELETE MODAL */}
       {confirmModal.show && (
-        <div className="modal fade show d-block scx-backdrop">
-          <div className="modal-dialog modal-dialog-centered">
+        <div className="modal fade show d-block scx-backdrop scx-anim">
+          <div className="modal-dialog modal-dialog-centered modal-md">
             <div className="modal-content modal-fancy p-3">
               <div className="modal-body text-center">
-                <div className="confirm-icon mb-3">
-                  <i className="fas fa-trash-alt"></i>
+                <div className="confirm-icon">
+                  <i className="fas fa-trash-alt" />
                 </div>
-                <h6>¿Eliminar hidropónico?</h6>
-                <p className="text-muted small">Esta acción no se puede deshacer.</p>
 
-                <p className="mt-2">
-                  {confirmModal.hidro?.nombre || `Hidro #${confirmModal.hidro?.id}`}
-                </p>
+                <h6 className="confirm-title">¿Eliminar hidropónico?</h6>
+                <p className="confirm-sub">Esta acción no se puede deshacer.</p>
 
-                <div className="d-flex justify-content-center gap-3 mt-3">
-                  <button className="btn btn-outline-secondary" onClick={closeConfirm}>
+                <div className="confirm-target">
+                  <div className="confirm-target-name">
+                    {confirmModal.hidro?.nombre || `Hidro #${confirmModal.hidro?.id}`}
+                  </div>
+
+                  <div className="confirm-target-meta">
+                    <span className="chip">
+                      <i className="fas fa-hashtag me-1" />
+                      {confirmModal.hidro?.numeroHidroponico ?? "—"}
+                    </span>
+                    <span className="chip">
+                      <i className="fas fa-layer-group me-1" />
+                      {confirmModal.hidro?.cantidadBandejas ?? "—"} bandejas
+                    </span>
+                  </div>
+                </div>
+
+                <div className="confirm-actions">
+                  <button className="btn btn-outline-secondary btn-ui" onClick={closeConfirm} disabled={loading}>
                     Cancelar
                   </button>
-                  <button className="btn btn-danger" onClick={confirmAndDelete}>
-                    Eliminar
+
+                  <button className="btn btn-danger btn-ui btn-ui-danger" onClick={confirmAndDelete} disabled={loading}>
+                    {loading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" />
+                        Eliminando...
+                      </>
+                    ) : (
+                      <>
+                        <i className="fas fa-trash me-2" />
+                        Eliminar
+                      </>
+                    )}
                   </button>
+                </div>
+
+                <div className="confirm-footnote">
+                  Sugerencia: si solo quieres detenerlo, cambia el estado a <b>Pausado</b>.
                 </div>
               </div>
             </div>
@@ -659,12 +759,10 @@ export default function Hidroponicos() {
         </div>
       )}
 
-      {/* ==============================
-          PAGINATION
-      ============================== */}
+      {/* PAGINATION */}
       {totalPages > 1 && (
         <nav className="mt-3">
-          <ul className="pagination pagination-sm justify-content-start">
+          <ul className="pagination pagination-sm justify-content-start pagination-soft">
             <li className={`page-item ${page === 1 ? "disabled" : ""}`}>
               <button type="button" className="page-link" onClick={() => setPage((p) => Math.max(1, p - 1))}>
                 &laquo;
@@ -680,11 +778,7 @@ export default function Hidroponicos() {
             ))}
 
             <li className={`page-item ${page === totalPages ? "disabled" : ""}`}>
-              <button
-                type="button"
-                className="page-link"
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              >
+              <button type="button" className="page-link" onClick={() => setPage((p) => Math.min(totalPages, p + 1))}>
                 &raquo;
               </button>
             </li>

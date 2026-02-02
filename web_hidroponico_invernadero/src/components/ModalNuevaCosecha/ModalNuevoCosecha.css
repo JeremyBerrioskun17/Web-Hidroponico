@@ -1,128 +1,167 @@
-/* ModalNuevoCosecha.css */
-
-/* Modal general */
-.modal-fancy .modal-content {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  transform-origin: center top;
-  animation: popIn 0.2s ease;
-  border: none;
+/* ===== React Modal Shell (igual patrón Hidroponico) ===== */
+.hdm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(2, 6, 23, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  animation: hdmFade .16s ease-out;
 }
 
-/* Animación al abrir */
-@keyframes popIn {
-  from { transform: translateY(-10px) scale(0.98); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
+@keyframes hdmFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* Encabezado del modal */
-.modal-fancy .modal-header {
-  border-bottom: 1px solid #e5e7eb;
-  background-color: #f9fafb;
-}
-
-.modal-fancy .modal-title {
-  font-weight: 700;
-  color: #2d3748;
-}
-
-/* Labels */
-.modal-fancy .form-label {
-  font-weight: 600;
-  color: #4b5563;
-}
-
-/* Inputs y selects */
-.modal-fancy .form-control,
-.modal-fancy .form-select {
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  transition: all 0.2s;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.95rem;
-}
-
-.modal-fancy .form-control:focus,
-.modal-fancy .form-select:focus {
-  border-color: #10b981;
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+.hdm-dialog {
+  width: min(980px, 100%);
   outline: none;
+  animation: hdmUp .18s ease-out;
 }
 
-/* Input-group icons */
-.modal-fancy .input-icon {
-  width: 42px;
+.hdm-dialog-lg {
+  width: min(1100px, 100%);
+}
+
+@keyframes hdmUp {
+  from { transform: translateY(10px); }
+  to { transform: translateY(0); }
+}
+
+.hdm-modal {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.35);
+}
+
+/* ===== Header ===== */
+.hdm-header {
+  background: rgba(15, 23, 42, 0.02);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  padding: 16px 18px;
+}
+
+.hdm-head {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #6b7280;
-  background-color: #f3f4f6;
-  border-right: 1px solid #d1d5db;
+  gap: 14px;
+  min-width: 0;
 }
 
-/* Date inputs especiales */
-.modal-fancy input[type="date"] {
-  padding-left: 0.75rem;
-  transition: all 0.2s;
-  cursor: pointer;
+.hdm-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: rgba(22, 163, 74, 0.12);
+  border: 1px solid rgba(22, 163, 74, 0.18);
+  display: grid;
+  place-items: center;
+  color: #15803d;
+  font-size: 22px;
+  flex-shrink: 0;
 }
 
-.modal-fancy input[type="date"]:hover {
-  background-color: #f9fafb;
-}
+.hdm-titleWrap { min-width: 0; }
 
-.modal-fancy input[type="date"]:focus {
-  background-color: #ffffff;
-}
-
-/* Mensajes de ayuda y notas */
-.small-note {
-  font-size: 0.85rem;
-  color: #6b7280;
-  margin-top: 0.25rem;
-}
-
-/* Opciones de hidroponicos */
-.hidro-option {
-  display: flex;
+.hdm-kicker {
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
+  font-weight: 950;
+  color: #15803d;
+  letter-spacing: 0.02em;
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.kicker-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #16a34a;
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12);
+}
+
+.hdm-title {
+  font-weight: 950;
+  color: #0f172a;
+  font-size: 1.35rem;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.hdm-sub {
+  margin-top: 6px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.hdm-close { opacity: 0.75; }
+.hdm-close:hover { opacity: 1; }
+
+/* ===== Body ===== */
+.hdm-body {
+  padding: 16px 18px 18px;
+  background: white;
+  max-height: min(72vh, 780px);
+  overflow: auto;
+}
+
+.hdm-body .form-label {
+  font-weight: 800;
+  color: #475569;
+}
+
+/* Inputs suaves como Hidroponico */
+.input-group-soft .input-group-text {
+  background: rgba(22, 163, 74, 0.10);
+  border-color: rgba(22, 163, 74, 0.18);
+  color: #15803d;
+}
+
+.input-group-soft .form-control,
+.input-group-soft .form-select {
+  border-color: rgba(15, 23, 42, 0.14);
+  transition: box-shadow .16s ease, border-color .16s ease;
+}
+
+.input-group-soft .form-control:focus,
+.input-group-soft .form-select:focus {
+  border-color: rgba(22, 163, 74, 0.45);
+  box-shadow: 0 0 0 0.18rem rgba(22, 163, 74, 0.14);
+}
+
+.select-soft { cursor: pointer; }
+
+.form-hint {
+  font-size: 12.5px;
+  color: #64748b;
+  margin-top: 6px;
+  line-height: 1.25;
+}
+
+/* ===== Footer ===== */
+.hdm-footer {
+  background: rgba(15, 23, 42, 0.02);
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
-.badge-num {
-  background: #f1fdf6;
-  color: #0f5132;
-  padding: 4px 8px;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 0.85rem;
+.hdm-footnote {
+  font-size: 12.5px;
+  color: #94a3b8;
+  font-weight: 700;
 }
 
-/* Botones */
-.modal-fancy .btn-success {
-  background-color: #10b981;
-  border-color: #10b981;
-  transition: all 0.2s;
-}
-
-.modal-fancy .btn-success:hover {
-  background-color: #059669;
-  border-color: #059669;
-}
-
-.modal-fancy .btn-outline-secondary {
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-}
-
-/* Footer */
-.modal-fancy .modal-footer {
-  border-top: 1px solid #e5e7eb;
-}
-
-/* Spinner */
-.modal-fancy .spinner-border {
-  width: 1rem;
-  height: 1rem;
+/* móvil */
+@media (max-width: 576px) {
+  .hdm-body { max-height: 74vh; }
 }

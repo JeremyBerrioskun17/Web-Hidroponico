@@ -1,130 +1,403 @@
+/* ==============================
+  MODAL DETALLE HIDROPONICO – THEME
+  (alineado con módulo Hidropónicos)
+============================== */
+
+.hidro-detail-modal {
+  --accent: #16a34a;
+  --accent-deep: #15803d;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: rgba(15, 23, 42, 0.10);
+  --soft: rgba(15, 23, 42, 0.03);
+  --shadow-sm: 0 8px 18px rgba(15, 23, 42, 0.12);
+  --shadow-md: 0 20px 50px rgba(2, 6, 23, 0.35);
+}
+
+/* modal container */
 .hidro-modal {
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
-  animation: popIn .18s ease;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
 }
 
-@keyframes popIn {
-  from { opacity: 0; transform: translateY(-6px) scale(.98); }
-  to { opacity: 1; transform: none; }
-}
+/* ==============================
+  HEADER
+============================== */
 
-/* HEADER */
 .hidro-modal-header {
-  background: linear-gradient(135deg, #e8f5e9, #f1f8f5);
-  border-bottom: 1px solid #e0e0e0;
+  background: rgba(15, 23, 42, 0.02);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  padding: 16px 18px;
+}
+
+.hidro-modal-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
 }
 
 .hidro-modal-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: #d1f5e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #198754;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: rgba(22, 163, 74, 0.12);
+  border: 1px solid rgba(22, 163, 74, 0.18);
+  display: grid;
+  place-items: center;
+  color: var(--accent-deep);
   font-size: 22px;
+  flex-shrink: 0;
 }
 
-/* icon circle variants */
-.icon-circle {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 16px;
-  margin-right: .75rem;
-}
-.bg-green { background: #10b981; }
-.bg-blue { background: #0ea5e9; }
-.bg-yellow { background: #f59e0b; }
-.bg-teal { background: #06b6d4; }
-.bg-gray { background: #6b7280; }
-
-/* BODY */
-.hidro-modal-body {
-  padding-top: 1rem;
+.hidro-modal-titleWrap {
+  min-width: 0;
 }
 
-/* ESTADO */
-.estado-badge {
+.hidro-modal-kicker {
   display: inline-flex;
   align-items: center;
-  gap: .5rem;
-  padding: .35rem .75rem;
-  border-radius: 20px;
-  font-size: .85rem;
-  font-weight: 600;
+  gap: 8px;
+  font-weight: 950;
+  color: var(--accent-deep);
+  letter-spacing: 0.02em;
+  font-size: 0.95rem;
+  margin-bottom: 2px;
 }
 
-.libre {
-  background: #e6f4ea;
-  color: #047857;
+.kicker-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12);
 }
 
-.ocupado {
-  background: #e6f9ff;
-  color: #065f46;
+.hidro-modal-title {
+  font-weight: 950;
+  color: var(--text);
+  font-size: 1.35rem;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.pausado {
-  background: #fff7ed;
-  color: #92400e;
-}
-
-/* INFO CARDS */
-.info-card {
+.hidro-modal-sub {
+  margin-top: 6px;
   display: flex;
-  gap: .75rem;
-  padding: .75rem;
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #eef2f7;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  color: #475569;
+  font-size: 1.02rem;
+}
+
+.sub-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.sub-item i {
+  color: var(--accent-deep);
+}
+
+.sub-label {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.sub-value {
+  color: #334155;
+  font-weight: 900;
+}
+
+.sub-sep {
+  color: rgba(15, 23, 42, 0.35);
+}
+
+.hidro-close {
+  opacity: 0.7;
+  transition: opacity .14s ease;
+}
+.hidro-close:hover {
+  opacity: 1;
+}
+
+/* ==============================
+  BODY
+============================== */
+
+.hidro-modal-body {
+  padding: 16px 18px 18px;
+  background: white;
+}
+
+.hidro-topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.hidro-estado {
+  font-size: 0.92rem;
+  font-weight: 950;
+  padding: 0.38rem 0.78rem;
+}
+
+.hidro-topHint {
+  color: var(--muted);
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+/* ==============================
+  DETAIL CARDS (Número / Bandejas)
+============================== */
+
+.detail-card {
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  background: rgba(15, 23, 42, 0.02);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
   height: 100%;
 }
 
-.info-card.full {
-  background: #fdfdfd;
+.detail-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(22, 163, 74, 0.12);
+  border: 1px solid rgba(22, 163, 74, 0.18);
+  display: grid;
+  place-items: center;
+  color: var(--accent-deep);
+  font-size: 18px;
+  flex-shrink: 0;
 }
 
-.info-card .label {
-  font-size: .75rem;
-  color: #6c757d;
+.detail-body {
+  min-width: 0;
+}
+
+.detail-label {
+  font-size: 0.98rem;
+  font-weight: 950;
+  color: #334155;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  letter-spacing: .03em;
+  margin-bottom: 4px;
 }
 
-.info-card .value {
-  font-weight: 600;
-  color: #111827;
+.detail-value {
+  font-size: 1.35rem;
+  font-weight: 950;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
-.info-card .icon-circle i { font-size: 16px; }
-
-.info-card .label {
-  font-size: .75rem;
-  color: #6c757d;
+.detail-help {
+  margin-top: 8px;
+  font-size: 0.98rem;
+  color: var(--muted);
+  line-height: 1.35;
 }
 
-/* full width info card */
-.info-card.full { background: #fbfdff; }
+/* ==============================
+  PANEL (Observaciones)
+============================== */
 
-.confirm-icon { width: 64px; height: 64px; border-radius: 18px; background: #ffecec; display:flex; align-items:center; justify-content:center; color:#dc3545; margin:0 auto; }
+.panel-card {
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  padding: 14px;
+}
 
-/* FOOTER */
+.panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  margin-bottom: 12px;
+}
+
+.panel-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 950;
+  color: var(--text);
+  font-size: 1.12rem;
+}
+
+.panel-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(22, 163, 74, 0.12);
+  border: 1px solid rgba(22, 163, 74, 0.18);
+  display: grid;
+  place-items: center;
+  color: var(--accent-deep);
+}
+
+.panel-muted {
+  font-size: 0.98rem;
+  color: var(--muted);
+  line-height: 1.2;
+  text-align: right;
+}
+
+/* Observaciones */
+.obs-panel {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(15, 23, 42, 0.02);
+  border-radius: 14px;
+  padding: 12px;
+  color: #334155;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  min-height: 150px;
+  white-space: pre-wrap;
+}
+
+.obs-foot {
+  margin-top: 10px;
+  font-size: 0.98rem;
+  color: var(--muted);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+/* ==============================
+  FOOTER
+============================== */
+
 .hidro-modal-footer {
-  background: #fafafa;
-  border-top: 1px solid #e0e0e0;
+  background: rgba(15, 23, 42, 0.02);
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  padding: 12px 18px;
 }
 
-/* RESPONSIVE */
+/* ==============================
+  STATUS PILL (mismos colores del módulo)
+============================== */
+
+.estado-pill {
+  font-size: 0.82rem;
+  font-weight: 950;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid transparent;
+}
+
+.estado-pill.libre {
+  background: rgba(16, 185, 129, 0.14);
+  color: #065f46;
+  border-color: rgba(16, 185, 129, 0.28);
+}
+
+.estado-pill.ocupado {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0c4a6e;
+  border-color: rgba(14, 165, 233, 0.22);
+}
+
+.estado-pill.pausado {
+  background: rgba(251, 146, 60, 0.14);
+  color: #92400e;
+  border-color: rgba(251, 146, 60, 0.24);
+}
+
+.estado-pill.inactivo {
+  background: rgba(99, 102, 241, 0.12);
+  color: #2b2e6b;
+  border-color: rgba(99, 102, 241, 0.20);
+}
+
+/* ==============================
+  RESPONSIVE
+============================== */
+
 @media (max-width: 576px) {
+  .hidro-modal-header { padding: 14px; }
+  .hidro-modal-body { padding: 14px; }
+  .hidro-modal-footer { padding: 12px 14px; }
+
   .hidro-modal-icon {
-    width: 40px;
-    height: 40px;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+  }
+
+  .hidro-modal-title {
+    font-size: 1.18rem;
+  }
+
+  .hidro-modal-sub {
+    font-size: 0.98rem;
+  }
+
+  .obs-panel {
+    min-height: 130px;
+  }
+}
+
+
+/* ===== React Modal Shell (no depende de bootstrap .modal) ===== */
+
+.hdm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(2, 6, 23, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  animation: hdmFade .16s ease-out;
+}
+
+@keyframes hdmFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hdm-dialog {
+  width: min(980px, 100%);
+  outline: none;
+  animation: hdmUp .18s ease-out;
+}
+
+@keyframes hdmUp {
+  from { transform: translateY(10px); }
+  to { transform: translateY(0); }
+}
+
+/* en móviles: más altura usable + scroll interno */
+@media (max-width: 576px) {
+  .hdm-dialog {
+    width: 100%;
   }
 }

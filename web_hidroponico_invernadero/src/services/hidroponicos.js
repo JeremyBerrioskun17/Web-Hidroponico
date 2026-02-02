@@ -1,35 +1,21 @@
-const API_BASE = import.meta.env.VITE_API_URL || "https://localhost:7001";
+import { api } from "../apiClient";
 
-async function sendJson(url, method = "GET", body) {
-  const opts = { method, headers: {} };
-
-  if (body) {
-    opts.headers["Content-Type"] = "application/json";
-    opts.body = JSON.stringify(body);
-  }
-
-  const res = await fetch(url, opts);
-  if (!res.ok) {
-    const txt = await res.text().catch(() => "");
-    throw new Error(txt || `HTTP ${res.status}`);
-  }
-
-  if (res.status === 204) return null;
-  return res.json();
+export async function listHydroponicos(params = {}) {
+  const res = await api.get("/api/hidroponicos", { params });
+  return res.data; // tu API devuelve array
 }
 
-// ✅ TU API DEVUELVE UN ARRAY
-export async function listHydroponicos() {
-  const res = await fetch(`${API_BASE}/api/hidroponicos`);
-  if (!res.ok) throw new Error("Error al cargar hidropónicos");
-  return res.json(); // <-- ARRAY DIRECTO
+export async function createHydroponico(payload) {
+  const res = await api.post("/api/hidroponicos", payload);
+  return res.data; // 201 Created devuelve objeto
 }
 
-export const createHydroponico = (payload) =>
-  sendJson(`${API_BASE}/api/hidroponicos`, "POST", payload);
+export async function updateHydroponico(id, payload) {
+  const res = await api.put(`/api/hidroponicos/${id}`, payload);
+  return res.data; // en tu API devuelve 204, aquí será undefined; está bien
+}
 
-export const deleteHydroponico = (id) =>
-  sendJson(`${API_BASE}/api/hidroponicos/${id}`, "DELETE");
-
-export const updateHydroponico = (id, payload) =>
-  sendJson(`${API_BASE}/api/hidroponicos/${id}`, "PUT", payload);
+export async function deleteHydroponico(id) {
+  const res = await api.delete(`/api/hidroponicos/${id}`);
+  return res.data; // 204 => undefined
+}

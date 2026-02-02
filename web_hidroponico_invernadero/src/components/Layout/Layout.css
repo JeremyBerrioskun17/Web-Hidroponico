@@ -1,302 +1,474 @@
-/* ======================================
-   LAYOUT GLOBAL — NicaTech Solutions
-   Restored clean stylesheet: green sidebar, white icons/text,
-   integrated submenus and topbar dropdowns with smooth hovers.
-======================================== */
+/* src/components/Layout.css */
 
-:root {
-  --green-main: #29e36d; /* original brand green */
-  --green-dark: #1aa85a;
-  --green-soft: #45e198;
-  --green-light: #23df7e;
-  --green-pastel: #e8fff3;
-  --text-dark: #1e293b;
-  --text-soft: #475569;
+/* =============================
+   Variables
+============================= */
+:root{
+  --green:#2DC653;      /* tu color pedido */
+  --greenDark:#1A7431;
+  --greenDarker:#155D27;
+
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:rgba(15,23,42,.10);
+
+  --radius:16px;
+  --shadow:0 18px 46px rgba(2,6,23,.08);
+  --shadowStrong:0 26px 70px rgba(2,6,23,.22);
+
+  --sidebarW:260px;
+  --sidebarWC:86px;
+  --topbarH:64px;
+
+  --zBackdrop:5900;
+  --zSidebar:6000;
+  --zTopbar:5800;
 }
 
-/* -----------------------------
-   TOPBAR
-   ----------------------------- */
-.topbar {
-  background: var(--green-main) !important;
-  border-bottom: 2px solid rgba(0,0,0,0.06);
-  color: #fff !important;
+/* =============================
+   Shell
+============================= */
+.nt-shell{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns: var(--sidebarW) 1fr;
+  background:var(--bg);
+  color:var(--text);
+}
+.nt-shell.is-collapsed{
+  grid-template-columns: var(--sidebarWC) 1fr;
 }
 
-.topbar .nav-link,
-.topbar i {
-  color: #ffffff !important;
-  font-size: 1.05rem;
+.nt-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,.55);
+  z-index:var(--zBackdrop);
 }
 
-.topbar .nav-link {
-  transition: background .16s ease, transform .12s ease;
-  padding: 6px 8px;
-  border-radius: 8px;
-}
-.topbar .nav-link:hover {
-  background: rgba(255,255,255,0.06);
-  transform: translateY(-1px);
+/* =============================
+   Sidebar (VERDE)
+   ✅ overflow visible para que el flyout NO se recorte
+============================= */
+.nt-sidebar{
+  position:sticky;
+  top:0;
+  height:100vh;
+  background: linear-gradient(180deg, var(--green) 0%, var(--greenDark) 100%);
+  border-right:1px solid rgba(255,255,255,.18);
+  z-index:var(--zSidebar);
+  display:flex;
+  flex-direction:column;
+
+  overflow: visible; /* ✅ CLAVE: permite que flyout salga */
 }
 
-.username-topbar {
-  font-weight: 600;
-  color: #fff !important;
+/* scroll interno */
+.nt-sidebar-scroll{
+  padding:10px 10px 14px;
+  overflow:auto;
+  flex:1 1 auto;
 }
 
-/* notification/message badge (red style) */
-.badge-counter {
-  background: #e4433e;
-  color: #fff;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 0.18rem 0.45rem;
-  min-width: 20px;
-  display: inline-block;
-  text-align: center;
-  font-size: 0.78rem;
+/* Brand */
+.nt-brand{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:14px 16px;
+  text-decoration:none;
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.18);
+}
+.nt-brand-icon{
+  width:44px;height:44px;
+  border-radius:14px;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.22);
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-size:18px;
+}
+.nt-brand-title{
+  font-weight:900;
+  letter-spacing:-.02em;
+  line-height:1.1;
+  color:#fff;
+}
+.nt-brand-title span{
+  opacity:.95;
+  font-weight:800;
+}
+.nt-brand-sub{
+  margin-top:2px;
+  font-size:.82rem;
+  color:rgba(255,255,255,.82);
 }
 
-/* -----------------------------
-   SIDEBAR
-   ----------------------------- */
-.sidebar {
-  background: linear-gradient(180deg, var(--green-dark), var(--green-main)) !important;
+/* Section title */
+.nt-nav-title{
+  font-size:.70rem;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:rgba(255,255,255,.82);
+  padding:14px 12px 8px;
+}
+
+/* Links (texto blanco) */
+.nt-nav-link{
+  width:100%;
+  display:grid;
+  grid-template-columns: 44px 1fr 26px;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  margin:2px 4px;
+  border-radius:14px;
+  text-decoration:none;
+  color:#fff;  /* ✅ texto blanco */
+  transition: background .18s ease, transform .18s ease, opacity .18s ease;
+}
+
+.nt-nav-link:hover{
+  background:rgba(255,255,255,.14);
+  color:#fff;
+}
+
+.nt-nav-link.active{
+  background:rgba(16,69,29,.40);
+  border:1px solid rgba(255,255,255,.22);
+  color:#fff;
+  box-shadow:0 12px 28px rgba(2,6,23,.18);
+}
+
+/* Icon square */
+.nt-ico{
+  width:40px;height:40px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.16);
+  color:#fff;
+}
+.nt-end{
+  display:grid;
+  place-items:center;
+  opacity:.85;
+  transition:transform .18s ease;
+}
+
+/* arrow rotate */
+.nt-group-trigger[aria-expanded="true"] .nt-end{
+  transform:rotate(90deg);
+}
+
+/* Collapse content */
+.nt-collapse{ margin:4px 10px 10px; }
+.nt-submenu{
+  border-radius:14px;
+  padding:10px 10px 8px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.16);
+}
+.nt-subtitle{
+  font-size:.75rem;
+  color:rgba(255,255,255,.92);
+  margin:2px 8px 8px;
+}
+.nt-subdot{
+  width:6px;height:6px;
+  border-radius:999px;
+  background:rgba(255,255,255,.85);
+  margin-right:10px;
+}
+.nt-subtxt{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+.nt-submenu .nt-nav-link{
+  grid-template-columns: 16px 1fr 0;
+  padding:10px 12px;
+  margin:2px 0;
+  border-radius:12px;
+  color:#fff;
+}
+.nt-submenu .nt-nav-link .nt-end{ display:none; }
+
+/* Sidebar footer */
+.nt-sidebar-footer{
+  padding:12px;
+  border-top:1px solid rgba(255,255,255,.18);
+  background:rgba(0,0,0,.08);
+}
+.nt-sidebar-toggle{
+  width:42px;height:42px;
+  border-radius:14px;
+  border:0;
+  background:rgba(255,255,255,.16);
+  color:#fff;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.nt-sidebar-toggle:hover{ background:rgba(255,255,255,.22); }
+
+/* =============================
+   Collapsed mode
+============================= */
+.nt-sidebar.is-collapsed .nt-brand-text,
+.nt-sidebar.is-collapsed .nt-nav-title,
+.nt-sidebar.is-collapsed .nt-txt,
+.nt-sidebar.is-collapsed .nt-end{
+  display:none !important;
+}
+
+.nt-sidebar.is-collapsed .nt-nav-link{
+  grid-template-columns: 1fr;
+  justify-items:center;
+  padding:10px 8px;
+}
+
+.nt-sidebar.is-collapsed .nt-ico{
+  width:44px;height:44px;
+  border-radius:14px;
+}
+
+/* Flyout anchor */
+.nt-fly-anchor{ position:relative; }
+
+/* Flyout trigger */
+.nt-fly-trigger{
+  border:0;
+  background:transparent;
+  width:100%;
+  cursor:pointer;
+}
+
+/* ✅ Flyout flotante */
+.nt-flyout{
+  position:absolute;
+  left: calc(var(--sidebarWC) + 10px);
+  top: 0;
   width: 260px;
-  font-size: 1.05rem;
-  padding-top: 1rem;
-  color: #fff;
+  background:#ffffff;
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow: var(--shadowStrong);
+  padding:10px;
+  z-index: 99999; /* ✅ bien arriba */
 }
 
-.sidebar .nav-link {
-  color: #ffffff !important;
-  padding: 12px 18px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  font-weight: 500;
-  transition: background .22s ease, padding-left .22s ease, transform .12s ease;
+.nt-flyout::before{
+  content:"";
+  position:absolute;
+  left:-7px;
+  top:16px;
+  width:14px;height:14px;
+  background:#fff;
+  border-left:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  transform:rotate(45deg);
 }
 
-.sidebar .nav-link i {
-  font-size: 1.18rem;
-  width: 24px;
-  text-align: center;
-  color: rgba(255,255,255,0.95);
+.nt-flyout-head{
+  padding:8px 10px 10px;
+  border-bottom:1px solid rgba(15,23,42,.08);
+  margin-bottom:6px;
+}
+.nt-flyout-title{
+  font-weight:900;
+  color:#0f172a;
+}
+.nt-flyout-sub{
+  font-size:.82rem;
+  color:rgba(15,23,42,.60);
+  margin-top:2px;
+}
+.nt-fly-item{
+  display:block;
+  padding:10px 12px;
+  border-radius:12px;
+  text-decoration:none;
+  color:#0f172a;
+  font-weight:800;
+}
+.nt-fly-item:hover{
+  background: rgba(46,198,83,.14);
+  color:#0f172a;
 }
 
-.sidebar .nav-link span {
-  color: rgba(255,255,255,0.95);
+/* =============================
+   Topbar (sin bordes tipo botones)
+============================= */
+.nt-main{ min-width:0; display:flex; flex-direction:column; }
+
+.nt-topbar{
+  position:sticky;
+  top:0;
+  z-index:var(--zTopbar);
+  height:var(--topbarH);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 10px 16px;
+  background:#ffffff;
+  border-bottom:1px solid rgba(15,23,42,.08);
 }
 
-.sidebar .nav-link:hover {
-  background: rgba(255,255,255,0.06);
-  padding-left: 24px;
-  transform: translateY(-1px);
+.nt-topbar-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
-.sidebar .nav-link.active {
-  background: rgba(255,255,255,0.12) !important;
-  border-left: 4px solid rgba(255,255,255,0.18);
-  font-weight: 700 !important;
+.nt-burger{
+  width:42px;height:42px;
+  border:0;
+  background:transparent;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  color:rgba(15,23,42,.75);
 }
+.nt-burger:hover{ background:rgba(15,23,42,.06); }
 
-/* sidebar heading */
-.sidebar-heading {
-  padding: 10px 20px;
-  font-size: 0.92rem;
-  letter-spacing: 0.5px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.92);
-  text-transform: uppercase;
+.nt-search{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#f1f5f9;
+  border-radius:999px;
+  padding: 8px 10px 8px 14px;
+  width: min(520px, 44vw);
 }
-
-/* brand */
-.sidebar-brand {
-  height: 70px;
-  padding: 12px 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.nt-search i{ color:rgba(15,23,42,.45); }
+.nt-search input{
+  border:0; outline:0; width:100%;
+  background:transparent;
 }
-
-.sidebar-brand-icon i {
-  font-size: 1.55rem;
-  color: rgba(255,255,255,0.9);
-}
-
-.sidebar-brand-text {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.95);
-}
-
-/* toggled state */
-.sidebar.toggled { width: 80px; }
-.sidebar.toggled .sidebar-brand-text { opacity: 0; }
-
-/* -----------------------------
-   SUBMENUS / COLLAPSE
-   ----------------------------- */
-.collapse-inner {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-  border-radius: 10px !important;
-  padding: 6px 6px;
-  margin: 6px;
-}
-
-/* Floating submenu when sidebar is collapsed: make it a solid green panel */
-.sidebar .nav-item { position: relative; }
-
-/* Floating submenu when sidebar is collapsed: align to the hovered item */
-.sidebar.toggled .nav-item > .collapse-inner,
-.sidebar.toggled .nav-item .collapse-inner {
-  position: absolute !important;
-  left: calc(100% + 8px);
-  top: 50%;
-  transform: translateY(-50%);
-  min-width: 200px;
-  z-index: 1100;
-  background: linear-gradient(180deg, var(--green-dark), var(--green-main));
-  border-radius: 10px !important;
-  padding: 8px 6px !important;
-  margin: 0 !important;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-}
-
-.sidebar.toggled .nav-item > .collapse-inner::before,
-.sidebar.toggled .nav-item .collapse-inner::before {
-  /* caret centered vertically relative to the hovered item */
-  content: "";
-  position: absolute;
-  left: -7px;
-  top: 50%;
-  transform: translateY(-50%) rotate(45deg);
-  width: 12px;
-  height: 12px;
-  background: linear-gradient(180deg, var(--green-dark), var(--green-main));
-  box-shadow: -2px -2px 6px rgba(0,0,0,0.06);
-}
-
-.sidebar.toggled .nav-item > .collapse-inner .collapse-header,
-.sidebar.toggled .nav-item .collapse-inner .collapse-header,
-.sidebar.toggled .nav-item > .collapse-inner .collapse-item,
-.sidebar.toggled .nav-item .collapse-inner .collapse-item {
-  color: #fff !important;
-}
-
-.sidebar.toggled .nav-item > .collapse-inner .collapse-item,
-.sidebar.toggled .nav-item .collapse-inner .collapse-item {
-  white-space: nowrap;
-  padding: 8px 12px;
-  border-radius: 6px;
-}
-
-.sidebar.toggled .nav-item > .collapse-inner .collapse-item:hover,
-.sidebar.toggled .nav-item .collapse-inner .collapse-item:hover,
-.sidebar.toggled .nav-item > .collapse-inner .collapse-item:focus,
-.sidebar.toggled .nav-item .collapse-inner .collapse-item:focus {
-  background: rgba(0,0,0,0.18) !important;
-  color: #fff !important;
-}
-
-.collapse-inner .collapse-header {
-  color: rgba(255,255,255,0.85);
-  font-weight: 700;
-  padding-left: 0.75rem;
-}
-
-.collapse-item {
+.nt-search button{
+  border:0;
+  background: linear-gradient(135deg, var(--green) 0%, #6EDE8A 100%);
+  color:#0b1220;
+  font-weight:900;
   padding: 8px 14px;
-  color: #ffffff !important;
-  font-weight: 600;
-  transition: background .16s ease, padding-left .18s ease, transform .08s ease;
-  border-radius: 6px;
-  margin: 4px 4px;
-  white-space: normal; /* allow line-wrap for small screens */
+  border-radius: 999px;
 }
 
-.sidebar .collapse-inner .collapse-item:hover,
-.sidebar .collapse-inner .collapse-item:focus {
-  /* use a subtle dark overlay for higher contrast on green backgrounds */
-  background: rgba(0,0,0,0.12) !important;
-  padding-left: 22px;
-  transform: translateY(-1px);
-  color: #ffffff !important;
+.nt-topbar-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
-.sidebar .collapse-inner .collapse-item.active {
-  background: rgba(0,0,0,0.14) !important;
-  font-weight: 800;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+/* Icon buttons: sin borde */
+.nt-icon{
+  width:40px;height:40px;
+  border:0;
+  background:transparent;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  color:rgba(15,23,42,.72);
+  position:relative;
+}
+.nt-icon:hover{ background:rgba(15,23,42,.06); }
+
+.nt-dot{
+  position:absolute;
+  top:9px;
+  right:10px;
+  width:8px;height:8px;
+  border-radius:999px;
+  background: var(--green);
+  box-shadow: 0 0 0 3px rgba(46,198,83,.18);
 }
 
-/* -----------------------------
-   TOGGLER
-   ----------------------------- */
-#sidebarToggle, #sidebarToggleTop {
-  background: #ffffff22;
-  color: white;
-  transition: transform .2s ease, background .2s ease;
-}
-#sidebarToggle:hover, #sidebarToggleTop:hover { background: #ffffff33; transform: scale(1.08); }
-
-/* -----------------------------
-   SIDEBAR CARD
-   ----------------------------- */
-.sidebar-card {
-  background: rgba(255, 255, 255, .08);
-  border-radius: 12px;
-  padding: 14px;
-  color: #fff;
-  backdrop-filter: blur(6px);
+.nt-topbar-sep{
+  width:1px;
+  height:28px;
+  background:rgba(15,23,42,.10);
 }
 
-.sidebar-card img { max-width: 100%; height: auto; border-radius: 6px; }
-
-/* -----------------------------
-   TOPBAR DROPDOWNS
-   ----------------------------- */
-.topbar .dropdown-menu {
-  background: var(--green-dark);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+/* User */
+.nt-user{
+  border:0;
+  background:transparent;
+  border-radius:999px;
+  padding: 6px 8px;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
-.topbar .dropdown-header { color: #ffffffcc; font-weight: 700; padding: 10px 14px; }
-.topbar .dropdown-item { color: #fff !important; padding: 10px 12px; transition: background .12s ease; }
-.topbar .dropdown-item i { color: #fff !important; margin-right: 8px; }
-.topbar .dropdown-item:hover { background: rgba(255,255,255,0.04); }
+.nt-user:hover{ background:rgba(15,23,42,.06); }
 
-.dropdown-divider { border-color: rgba(255,255,255,0.06); }
+.nt-avatar{
+  width:36px;height:36px;
+  border-radius:999px;
+  border:2px solid rgba(46,198,83,.22);
+}
+.nt-user-name{ font-weight:900; line-height:1.05; }
+.nt-user-role{ font-size:.82rem; color:rgba(15,23,42,.55); }
+.nt-caret{ opacity:.65; }
 
-/* Profile dropdown tweak */
-.dropdown-menu .text-gray-400 { color: #ffffff88 !important; }
+/* Dropdown */
+.nt-dd{
+  border-radius:14px;
+  border:1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding:10px;
+  min-width: 260px;
+}
+.nt-dd-head{ font-weight:900; padding: 8px 10px 10px; }
+.nt-dd-empty{ padding: 8px 10px; }
 
-/* -----------------------------
-   CONTENT / FOOTER
-   ----------------------------- */
-#content-wrapper { background: #f8fafc; }
-footer { font-size: 0.95rem; color: var(--text-soft); }
+/* =============================
+   Content / Footer
+============================= */
+.nt-content{ padding:16px; }
+.nt-container{ padding:0; }
 
-/* small responsive tweaks */
-@media (max-width: 991px) {
-  .sidebar { width: 72px; }
-  .sidebar .nav-link span { display: none; }
-  .sidebar .nav-link { padding: 10px 8px; }
-  .sidebar .nav-link i { width: auto; }
-  .sidebar-brand-text { display: none; }
+.nt-footer{
+  margin-top:auto;
+  background:#ffffff;
+  border-top:1px solid rgba(15,23,42,.08);
+  padding:12px 16px;
+  color:rgba(15,23,42,.60);
 }
 
-@media (max-width: 1200px) {
-  .sidebar { width: 220px; }
-  .sidebar .nav-link { padding: 10px 14px; font-size: 0.98rem; }
-  .collapse-inner { margin: 4px; }
+/* =============================
+   Mobile
+============================= */
+@media (max-width: 991px){
+  .nt-shell{ grid-template-columns: 1fr; }
+
+  .nt-sidebar{
+    position:fixed;
+    left:0; top:0;
+    height:100dvh;
+    width: var(--sidebarW);
+    transform: translateX(-110%);
+    transition: transform .22s ease;
+    z-index: var(--zSidebar);
+  }
+  .nt-sidebar.is-mobile-open{ transform: translateX(0); }
+
+  /* en móvil no usamos collapsed */
+  .nt-sidebar.is-collapsed{ width: var(--sidebarW); }
+  .nt-sidebar.is-collapsed .nt-brand-text,
+  .nt-sidebar.is-collapsed .nt-nav-title,
+  .nt-sidebar.is-collapsed .nt-txt,
+  .nt-sidebar.is-collapsed .nt-end{
+    display:block !important;
+  }
+  .nt-sidebar.is-collapsed .nt-nav-link{
+    grid-template-columns: 44px 1fr 26px;
+    justify-items:stretch;
+  }
+  .nt-flyout{ display:none !important; }
 }
 
-/* Ensure main button hovers (topbar and sidebar main nav links) keep their original feel */
-.sidebar .nav-link:hover,
-.topbar .nav-link:hover {
-  transition: background .16s ease, transform .12s ease;
+@media (max-width: 520px){
+  .nt-search{ width: 70vw; }
 }

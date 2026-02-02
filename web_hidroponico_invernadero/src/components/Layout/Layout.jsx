@@ -1,370 +1,520 @@
 ﻿// src/components/Layout.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import LogoGC from "../../assets/Logo_GC.png";
-import "./Layout.css"; // Estilos mejorados
+import "./Layout.css";
 
 export default function Layout() {
-    const [collapsed, setCollapsed] = useState(false);
-    const { user, logout } = useAuth();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const ROL = (user?.rol || "").toLowerCase();
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-    // Roles permitidos
-    const can = {
-        verIA: ROL === "administrador" || ROL === "investigador",
-        verMapas: ROL === "administrador" || ROL === "investigador",
-        verReportes: ROL === "administrador" || ROL === "investigador",
-        verIoT: ROL === "administrador" || ROL === "tecnico",
-        verGestion: ROL === "administrador",
+  // ✅ Flyout para sidebar colapsado
+  const [flyoutOpen, setFlyoutOpen] = useState(null); // "hidro" | "sensores" | "gestion" | null
+  const flyoutTimer = useRef(null);
+
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const ROL = (user?.rol || "").toLowerCase();
+
+  const can = useMemo(
+    () => ({
+      verIA: ROL === "administrador" || ROL === "investigador",
+      verMapas: ROL === "administrador" || ROL === "investigador",
+      verReportes: ROL === "administrador" || ROL === "investigador",
+      verIoT: ROL === "administrador" || ROL === "tecnico",
+      verGestion: ROL === "administrador",
+    }),
+    [ROL]
+  );
+
+  function closeAllSubmenus() {
+    const bs = window.bootstrap;
+    if (!bs) return;
+    document.querySelectorAll(".nt-sidebar .collapse.show").forEach((el) =>
+      new bs.Collapse(el, { toggle: false }).hide()
+    );
+  }
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    navigate("/login", { replace: true });
+  };
+
+  // ✅ al navegar: cierra submenus + drawer + flyout
+  useEffect(() => {
+    closeAllSubmenus();
+    setMobileOpen(false);
+    setFlyoutOpen(null);
+  }, [location.pathname]);
+
+  // ✅ si entra a móvil: no mantener collapsed
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 991px)");
+    const onChange = (e) => {
+      if (e.matches) {
+        setCollapsed(false);
+        setMobileOpen(false);
+        setFlyoutOpen(null);
+      } else {
+        setMobileOpen(false);
+      }
     };
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
 
-    // Función para cerrar submenús
-    function closeAllSubmenus() {
-        const bs = window.bootstrap;
-        if (!bs) return;
-        document.querySelectorAll(".sidebar .collapse.show").forEach((el) =>
-            new bs.Collapse(el, { toggle: false }).hide()
-        );
+  // ✅ lock scroll cuando drawer móvil está abierto
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev || "";
+    };
+  }, [mobileOpen]);
+
+  const avatarSrc =
+    user?.photoUrl
+      ? user.photoUrl
+      : user?.photoBase64
+      ? `data:image/jpeg;base64,${user.photoBase64}`
+      : "https://i.pravatar.cc/40?img=3";
+
+  function toggleSidebar() {
+    const isMobile = window.matchMedia("(max-width: 991px)").matches;
+    if (isMobile) {
+      setMobileOpen((v) => !v);
+      setCollapsed(false);
+      setFlyoutOpen(null);
+      return;
     }
 
-    const handleLogout = (e) => {
-        e.preventDefault();
-        logout();
-        navigate("/login", { replace: true });
-    };
+    setCollapsed((v) => {
+      const next = !v;
+      if (next) closeAllSubmenus(); // comprimimos => cerramos collapse
+      setFlyoutOpen(null);
+      return next;
+    });
+  }
 
-    useEffect(() => {
-        closeAllSubmenus();
-    }, [location.pathname]);
+  const preventHash = (e) => e.preventDefault();
 
-    // Avatar
-    const avatarSrc =
-        user?.photoUrl
-            ? user.photoUrl
-            : user?.photoBase64
-            ? `data:image/jpeg;base64,${user.photoBase64}`
-            : "https://i.pravatar.cc/40?img=3";
+  // ===== Flyout helpers =====
+  function openFlyout(id) {
+    if (!collapsed) return;
+    clearTimeout(flyoutTimer.current);
+    setFlyoutOpen(id);
+  }
 
-    // ★ Mejora: soporte a animaciones suaves del sidebar
-    useEffect(() => {
-        const collapses = Array.from(document.querySelectorAll(".sidebar .collapse"));
-        if (!collapses.length) return;
+  function closeFlyoutSoon() {
+    clearTimeout(flyoutTimer.current);
+    flyoutTimer.current = setTimeout(() => setFlyoutOpen(null), 150);
+  }
 
-        const onShow = (e) => e.target.classList.add("animating-show");
-        const onShown = (e) => {
-            const el = e.target;
-            el.classList.remove("animating-show");
-            el.classList.add("animated");
-        };
-        const onHide = (e) => {
-            const el = e.target;
-            el.classList.add("animating-hide");
-            el.classList.remove("animated");
-        };
-        const onHidden = (e) => e.target.classList.remove("animating-hide");
+  function keepFlyoutOpen() {
+    clearTimeout(flyoutTimer.current);
+  }
 
-        collapses.forEach((c) => {
-            c.addEventListener("show.bs.collapse", onShow);
-            c.addEventListener("shown.bs.collapse", onShown);
-            c.addEventListener("hide.bs.collapse", onHide);
-            c.addEventListener("hidden.bs.collapse", onHidden);
-        });
+  const navCls = ({ isActive }) => "nt-nav-link" + (isActive ? " active" : "");
 
-        return () => {
-            collapses.forEach((c) => {
-                c.removeEventListener("show.bs.collapse", onShow);
-                c.removeEventListener("shown.bs.collapse", onShown);
-                c.removeEventListener("hide.bs.collapse", onHide);
-                c.removeEventListener("hidden.bs.collapse", onHidden);
-            });
-        };
-    }, []);
+  return (
+    <div className={`nt-shell ${collapsed ? "is-collapsed" : ""}`}>
+      {/* Backdrop móvil */}
+      {mobileOpen && (
+        <div className="nt-backdrop" onClick={() => setMobileOpen(false)} aria-hidden="true" />
+      )}
 
-    return (
-        <div id="wrapper" className="d-flex">
-            {/* ===== SIDEBAR ===== */}
-            <ul
-                className={
-                    "navbar-nav sidebar sidebar-dark accordion " +
-                    (collapsed ? "toggled" : "")
-                }
-                id="accordionSidebar"
-            >
-                {/* BRAND */}
-              <NavLink
-                    className="sidebar-brand d-flex align-items-center"
-                    to="/dashboard"
-                    onClick={closeAllSubmenus}
-                >
-                    <div className="sidebar-brand-icon rotate-n-15">
-                        <i className="fas fa-seedling"></i>
-                    </div>
+      {/* ===== SIDEBAR ===== */}
+      <aside
+        className={
+          "nt-sidebar " +
+          (mobileOpen ? "is-mobile-open " : "") +
+          (collapsed ? "is-collapsed " : "")
+        }
+        aria-label="Sidebar"
+        onMouseLeave={() => {
+          if (collapsed) closeFlyoutSoon();
+        }}
+      >
+        {/* BRAND */}
+        <NavLink
+          className="nt-brand"
+          to="/dashboard"
+          onClick={() => {
+            closeAllSubmenus();
+            setMobileOpen(false);
+            setFlyoutOpen(null);
+          }}
+          title="NicaTech Solutions"
+        >
+          <div className="nt-brand-icon" aria-hidden="true">
+            <i className="fas fa-seedling" />
+          </div>
 
-                    <div className="sidebar-brand-text">
-                        NicaTech <sup>Solutions</sup>
-                    </div>
-                </NavLink>
-
-
-                <hr className="sidebar-divider my-0" />
-
-                {/* Dashboard */}
-                <li className="nav-item">
-                    <NavLink className="nav-link" to="/dashboard" onClick={closeAllSubmenus}>
-                        <i className="fas fa-warehouse"></i>
-                        <span>Dashboard</span>
-                    </NavLink>
-                </li>
-
-                {/* ===== HIDROPONÍA ===== */}
-                {(can.verGestion || can.verIoT) && (
-                    <>
-                        <hr className="sidebar-divider" />
-                        <div className="sidebar-heading">Hidroponía</div>
-
-                        <li className="nav-item">
-                            <a
-                                className="nav-link collapsed"
-                                href="#collapseHidro"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#collapseHidro"
-                                aria-expanded="false"
-                                aria-controls="collapseHidro"
-                            >
-                                <i className="fas fa-water"></i>
-                                <span>Hidroponía</span>
-                            </a>
-
-                            <div
-                                id="collapseHidro"
-                                className="collapse"
-                                data-bs-parent="#accordionSidebar"
-                            >
-                                <div className="collapse-inner">
-                                    <h6 className="collapse-header">Gestión:</h6>
-
-                                    <NavLink className="collapse-item" to="/hidroponico">
-                                        Hidropónicos
-                                    </NavLink>
-                                    <NavLink className="collapse-item" to="/cosecha">
-                                        Cosechas
-                                    </NavLink>
-                                </div>
-                            </div>
-                        </li>
-                    </>
-                )}
-
-                {/* ====== FITOSANITARIA ====== 
-                {can.verIA && ( <> <hr className="sidebar-divider" /> <div className="sidebar-heading">Fitosanitaria</div> <li className="nav-item"> <a className="nav-link collapsed" href="#collapseIA" data-bs-toggle="collapse" data-bs-target="#collapseIA" aria-expanded="false" aria-controls="collapseIA" > <i className="fas fa-microscope"></i> <span>Diagnóstico IA</span> </a> <div id="collapseIA" className="collapse" data-bs-parent="#accordionSidebar" > <div className="bg-white py-2 collapse-inner rounded"> <h6 className="collapse-header">Clasificación:</h6> <NavLink className="collapse-item" to="/catalogos" onClick={closeAllSubmenus}> Plagas registradas </NavLink> <NavLink className="collapse-item" to="/diagnosticos" onClick={closeAllSubmenus}> Mis diagnósticos </NavLink> <div className="collapse-divider"></div> <h6 className="collapse-header">Modelos IA:</h6> <NavLink className="collapse-item" to="/models" onClick={closeAllSubmenus}> Versiones del modelo </NavLink> <NavLink className="collapse-item" to="/metrics">Métricas</NavLink> </div> </div> </li> <li className="nav-item"> <a className="nav-link collapsed" href="#collapseMapa" data-bs-toggle="collapse" data-bs-target="#collapseMapa" aria-expanded="false" aria-controls="collapseMapa" > <i className="fas fa-map-marked-alt"></i> <span>Mapa</span> </a> <div id="collapseMapa" className="collapse" data-bs-parent="#accordionSidebar" > <div className="bg-white py-2 collapse-inner rounded"> <h6 className="collapse-header">Geolocalización:</h6> <NavLink className="collapse-item" to="/map" onClick={closeAllSubmenus}> Focos y casos </NavLink> <NavLink className="collapse-item" to="/heatmap" onClick={closeAllSubmenus}> Mapa de calor </NavLink> <NavLink className="collapse-item" to="/map/filters">Filtros por fecha/región</NavLink> </div> </div> </li> <li className="nav-item"> <a className="nav-link collapsed" href="#collapseReportes" data-bs-toggle="collapse" data-bs-target="#collapseReportes" aria-expanded="false" aria-controls="collapseReportes" > <i className="fas fa-chart-line"></i> <span>Reportes</span> </a> <div id="collapseReportes" className="collapse" data-bs-parent="#accordionSidebar" > <div className="bg-white py-2 collapse-inner rounded"> <h6 className="collapse-header">Analítica:</h6> <NavLink className="collapse-item" to="/reports" onClick={closeAllSubmenus}> Gráficas </NavLink> <NavLink className="collapse-item" to="/reports/table" onClick={closeAllSubmenus}> Datos en tabla </NavLink> </div> </div> </li> </> )} */}
-
-                {/* ===== IOT ===== */}
-                {can.verIoT && (
-                    <>
-                        <hr className="sidebar-divider" />
-                        <div className="sidebar-heading">IoT</div>
-
-                        <li className="nav-item">
-                            <a
-                                className="nav-link collapsed"
-                                href="#collapseSensores"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#collapseSensores"
-                            >
-                                <i className="fas fa-thermometer-half"></i>
-                                <span>Sensores</span>
-                            </a>
-
-                            <div
-                                id="collapseSensores"
-                                className="collapse"
-                                data-bs-parent="#accordionSidebar"
-                            >
-                                <div className="collapse-inner">
-                                    <h6 className="collapse-header">Lecturas:</h6>
-
-                                    <NavLink className="collapse-item" to="/sensoryMonitoring">
-                                        Monitoreo Tiempo Real
-                                    </NavLink>
-
-                                    <NavLink className="collapse-item" to="/sensors/control">
-                                        Control según análisis
-                                    </NavLink>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/sensoryControl">
-                                <i className="fas fa-sliders-h"></i>
-                                <span>Control</span>
-                            </NavLink>
-                        </li>
-                    </>
-                )}
-
-                {/* ===== GESTIÓN ===== */}
-                {can.verGestion && (
-                    <>
-                        <hr className="sidebar-divider" />
-                        <div className="sidebar-heading">Gestión</div>
-
-                        <li className="nav-item">
-                            <a
-                                className="nav-link collapsed"
-                                href="#collapseGestion"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#collapseGestion"
-                            >
-                                <i className="fas fa-users-cog"></i>
-                                <span>Usuarios y roles</span>
-                            </a>
-
-                            <div id="collapseGestion" className="collapse">
-                                <div className="collapse-inner">
-                                    <NavLink className="collapse-item" to="/users">
-                                        Usuarios
-                                    </NavLink>
-
-                                    <NavLink className="collapse-item" to="/roles">
-                                        Roles y permisos
-                                    </NavLink>
-
-                                    <NavLink className="collapse-item" to="/profile">
-                                        Mi perfil
-                                    </NavLink>
-                                </div>
-                            </div>
-                        </li>
-                    </>
-                )}
-
-                {/* Toggler */}
-                <div className="text-center d-none d-md-inline">
-                    <button
-                        className="rounded-circle border-0"
-                        id="sidebarToggle"
-                        onClick={() => setCollapsed((v) => !v)}
-                        aria-label="Toggle sidebar"
-                    />
-                </div>
-            </ul>
-
-            {/* ===== CONTENT WRAPPER ===== */}
-            <div id="content-wrapper" className="d-flex flex-column w-100">
-                <div id="content">
-
-                    {/* ===== TOPBAR (ahora verde elegante) ===== */}
-                    <nav className="navbar navbar-expand topbar mb-4 shadow">
-                        {/* Mobile Toggle */}
-                        <button
-                            id="sidebarToggleTop"
-                            className="btn btn-link d-md-none rounded-circle me-3"
-                            onClick={() => setCollapsed((v) => !v)}
-                        >
-                            <i className="fa fa-bars text-white"></i>
-                        </button>
-
-                        <ul className="navbar-nav ms-auto align-items-center">
-
-                            {/* Alerts */}
-                            <li className="nav-item dropdown no-arrow mx-1">
-                                <a
-                                    className="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="alertsDropdown"
-                                    data-bs-toggle="dropdown"
-                                >
-                                    <i className="fas fa-bell fa-fw"></i>
-                                    <span className="badge badge-counter">3</span>
-                                </a>
-
-                                <div
-                                    className="dropdown-list dropdown-menu dropdown-menu-end shadow"
-                                    aria-labelledby="alertsDropdown"
-                                >
-                                    <h6 className="dropdown-header">Centro de Alertas</h6>
-                                </div>
-                            </li>
-
-                            {/* Messages */}
-                            <li className="nav-item dropdown no-arrow mx-1">
-                                <a
-                                    className="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="messagesDropdown"
-                                    data-bs-toggle="dropdown"
-                                >
-                                    <i className="fas fa-envelope fa-fw"></i>
-                                    <span className="badge badge-counter">5</span>
-                                </a>
-
-                                <div
-                                    className="dropdown-list dropdown-menu dropdown-menu-end shadow"
-                                >
-                                    <h6 className="dropdown-header">Centro de Mensajes</h6>
-                                </div>
-                            </li>
-
-                            <div className="topbar-divider d-none d-sm-block" />
-
-                            {/* User */}
-                            <li className="nav-item dropdown no-arrow">
-                                <a
-                                    className="nav-link dropdown-toggle d-flex align-items-center"
-                                    href="#"
-                                    id="userDropdown"
-                                    data-bs-toggle="dropdown"
-                                >
-                                                    <span className="me-2 d-none d-lg-inline username-topbar">
-                                                        <i className="fas fa-user-circle me-1"></i>
-                                                        {user?.username} {user?.rol ? `· ${user.rol}` : ""}
-                                                    </span>
-
-                                    <img
-                                        className="img-profile rounded-circle"
-                                        src={avatarSrc}
-                                        width="32"
-                                        height="32"
-                                        alt={user?.username}
-                                    />
-                                </a>
-
-                                <div className="dropdown-menu dropdown-menu-end shadow">
-                                    <a className="dropdown-item" href="#">
-                                        <i className="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
-                                        Perfil
-                                    </a>
-
-                                    <a className="dropdown-item" href="#">
-                                        <i className="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
-                                        Configuración
-                                    </a>
-
-                                    <div className="dropdown-divider"></div>
-
-                                    <a className="dropdown-item" href="#" onClick={handleLogout}>
-                                        <i className="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
-                                        Cerrar sesión
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    {/* CONTENIDO */}
-                    <main className="container-fluid p-4">
-                        <Outlet />
-                    </main>
-                </div>
-
-                <footer className="bg-light text-center p-3 border-top mt-auto">
-                    © NicaTech Solutions
-                </footer>
+          <div className="nt-brand-text">
+            <div className="nt-brand-title">
+              NicaTech <span>Solutions</span>
             </div>
+            <div className="nt-brand-sub">Hidroponía</div>
+          </div>
+        </NavLink>
+
+        <div className="nt-sidebar-scroll">
+          {/* NAVIGATION */}
+          <div className="nt-nav-section">
+            <div className="nt-nav-title">Navigation</div>
+
+            <NavLink className={navCls} to="/dashboard" onClick={() => setMobileOpen(false)}>
+              <span className="nt-ico"><i className="fas fa-warehouse" /></span>
+              <span className="nt-txt">Dashboard</span>
+              <span className="nt-end" />
+            </NavLink>
+          </div>
+
+          {/* HIDROPONÍA */}
+          {(can.verGestion || can.verIoT) && (
+            <div className="nt-nav-section">
+              <div className="nt-nav-title">Hidroponía</div>
+
+              {!collapsed && (
+                <div className="nt-group">
+                  <a
+                    className="nt-nav-link nt-group-trigger collapsed"
+                    href="#"
+                    onClick={preventHash}
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseHidro"
+                    aria-expanded="false"
+                    aria-controls="collapseHidro"
+                  >
+                    <span className="nt-ico"><i className="fas fa-water" /></span>
+                    <span className="nt-txt">Hidroponía</span>
+                    <span className="nt-end"><i className="fas fa-chevron-right" /></span>
+                  </a>
+
+                  <div id="collapseHidro" className="collapse nt-collapse">
+                    <div className="nt-submenu">
+                      <div className="nt-subtitle">Gestión</div>
+
+                      <NavLink className={navCls} to="/hidroponico" onClick={() => setMobileOpen(false)}>
+                        <span className="nt-subdot" />
+                        <span className="nt-subtxt">Hidropónicos</span>
+                      </NavLink>
+
+                      <NavLink className={navCls} to="/cosecha" onClick={() => setMobileOpen(false)}>
+                        <span className="nt-subdot" />
+                        <span className="nt-subtxt">Cosechas</span>
+                      </NavLink>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {collapsed && (
+                <div
+                  className="nt-fly-anchor"
+                  onMouseEnter={() => openFlyout("hidro")}
+                  onFocus={() => openFlyout("hidro")}
+                >
+                  <button
+                    className={"nt-nav-link nt-fly-trigger " + (flyoutOpen === "hidro" ? "is-open" : "")}
+                    type="button"
+                    onClick={() => setFlyoutOpen((v) => (v === "hidro" ? null : "hidro"))}
+                    aria-haspopup="true"
+                    aria-expanded={flyoutOpen === "hidro"}
+                    title="Hidroponía"
+                  >
+                    <span className="nt-ico"><i className="fas fa-water" /></span>
+                    <span className="nt-txt">Hidroponía</span>
+                    <span className="nt-end" />
+                  </button>
+
+                  {flyoutOpen === "hidro" && (
+                    <div className="nt-flyout" onMouseEnter={keepFlyoutOpen} onMouseLeave={closeFlyoutSoon}>
+                      <div className="nt-flyout-head">
+                        <div className="nt-flyout-title">Hidroponía</div>
+                        <div className="nt-flyout-sub">Gestión</div>
+                      </div>
+
+                      <NavLink className="nt-fly-item" to="/hidroponico" onClick={() => setMobileOpen(false)}>
+                        Hidropónicos
+                      </NavLink>
+                      <NavLink className="nt-fly-item" to="/cosecha" onClick={() => setMobileOpen(false)}>
+                        Cosechas
+                      </NavLink>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* IOT */}
+          {can.verIoT && (
+            <div className="nt-nav-section">
+              <div className="nt-nav-title">IoT</div>
+
+              {!collapsed && (
+                <div className="nt-group">
+                  <a
+                    className="nt-nav-link nt-group-trigger collapsed"
+                    href="#"
+                    onClick={preventHash}
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseSensores"
+                    aria-expanded="false"
+                    aria-controls="collapseSensores"
+                  >
+                    <span className="nt-ico"><i className="fas fa-thermometer-half" /></span>
+                    <span className="nt-txt">Sensores</span>
+                    <span className="nt-end"><i className="fas fa-chevron-right" /></span>
+                  </a>
+
+                  <div id="collapseSensores" className="collapse nt-collapse">
+                    <div className="nt-submenu">
+                      <div className="nt-subtitle">Lecturas</div>
+
+                      <NavLink className={navCls} to="/sensoryMonitoring" onClick={() => setMobileOpen(false)}>
+                        <span className="nt-subdot" />
+                        <span className="nt-subtxt">Monitoreo Tiempo Real</span>
+                      </NavLink>
+
+                      <NavLink className={navCls} to="/sensors/control" onClick={() => setMobileOpen(false)}>
+                        <span className="nt-subdot" />
+                        <span className="nt-subtxt">Control según análisis</span>
+                      </NavLink>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {collapsed && (
+                <div
+                  className="nt-fly-anchor"
+                  onMouseEnter={() => openFlyout("sensores")}
+                  onFocus={() => openFlyout("sensores")}
+                >
+                  <button
+                    className={"nt-nav-link nt-fly-trigger " + (flyoutOpen === "sensores" ? "is-open" : "")}
+                    type="button"
+                    onClick={() => setFlyoutOpen((v) => (v === "sensores" ? null : "sensores"))}
+                    aria-haspopup="true"
+                    aria-expanded={flyoutOpen === "sensores"}
+                    title="Sensores"
+                  >
+                    <span className="nt-ico"><i className="fas fa-thermometer-half" /></span>
+                    <span className="nt-txt">Sensores</span>
+                    <span className="nt-end" />
+                  </button>
+
+                  {flyoutOpen === "sensores" && (
+                    <div className="nt-flyout" onMouseEnter={keepFlyoutOpen} onMouseLeave={closeFlyoutSoon}>
+                      <div className="nt-flyout-head">
+                        <div className="nt-flyout-title">Sensores</div>
+                        <div className="nt-flyout-sub">Lecturas</div>
+                      </div>
+
+                      <NavLink className="nt-fly-item" to="/sensoryMonitoring" onClick={() => setMobileOpen(false)}>
+                        Monitoreo Tiempo Real
+                      </NavLink>
+                      <NavLink className="nt-fly-item" to="/sensors/control" onClick={() => setMobileOpen(false)}>
+                        Control según análisis
+                      </NavLink>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <NavLink className={navCls} to="/sensoryControl" onClick={() => setMobileOpen(false)}>
+                <span className="nt-ico"><i className="fas fa-sliders-h" /></span>
+                <span className="nt-txt">Control</span>
+                <span className="nt-end" />
+              </NavLink>
+            </div>
+          )}
+
+          {/* GESTIÓN */}
+          {can.verGestion && (
+            <div className="nt-nav-section">
+              <div className="nt-nav-title">Gestión</div>
+
+              {!collapsed && (
+                <div className="nt-group">
+                  <a
+                    className="nt-nav-link nt-group-trigger collapsed"
+                    href="#"
+                    onClick={preventHash}
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseGestion"
+                    aria-expanded="false"
+                    aria-controls="collapseGestion"
+                  >
+                    <span className="nt-ico"><i className="fas fa-users-cog" /></span>
+                    <span className="nt-txt">Usuarios y roles</span>
+                    <span className="nt-end"><i className="fas fa-chevron-right" /></span>
+                  </a>
+
+                  <div id="collapseGestion" className="collapse nt-collapse">
+                    <div className="nt-submenu">
+                      <NavLink className={navCls} to="/users" onClick={() => setMobileOpen(false)}>
+                        <span className="nt-subdot" />
+                        <span className="nt-subtxt">Usuarios</span>
+                      </NavLink>
+
+                      <NavLink className={navCls} to="/roles" onClick={() => setMobileOpen(false)}>
+                        <span className="nt-subdot" />
+                        <span className="nt-subtxt">Roles y permisos</span>
+                      </NavLink>
+
+                      <NavLink className={navCls} to="/profile" onClick={() => setMobileOpen(false)}>
+                        <span className="nt-subdot" />
+                        <span className="nt-subtxt">Mi perfil</span>
+                      </NavLink>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {collapsed && (
+                <div
+                  className="nt-fly-anchor"
+                  onMouseEnter={() => openFlyout("gestion")}
+                  onFocus={() => openFlyout("gestion")}
+                >
+                  <button
+                    className={"nt-nav-link nt-fly-trigger " + (flyoutOpen === "gestion" ? "is-open" : "")}
+                    type="button"
+                    onClick={() => setFlyoutOpen((v) => (v === "gestion" ? null : "gestion"))}
+                    aria-haspopup="true"
+                    aria-expanded={flyoutOpen === "gestion"}
+                    title="Usuarios y roles"
+                  >
+                    <span className="nt-ico"><i className="fas fa-users-cog" /></span>
+                    <span className="nt-txt">Usuarios y roles</span>
+                    <span className="nt-end" />
+                  </button>
+
+                  {flyoutOpen === "gestion" && (
+                    <div className="nt-flyout" onMouseEnter={keepFlyoutOpen} onMouseLeave={closeFlyoutSoon}>
+                      <div className="nt-flyout-head">
+                        <div className="nt-flyout-title">Gestión</div>
+                        <div className="nt-flyout-sub">Usuarios y roles</div>
+                      </div>
+
+                      <NavLink className="nt-fly-item" to="/users" onClick={() => setMobileOpen(false)}>
+                        Usuarios
+                      </NavLink>
+                      <NavLink className="nt-fly-item" to="/roles" onClick={() => setMobileOpen(false)}>
+                        Roles y permisos
+                      </NavLink>
+                      <NavLink className="nt-fly-item" to="/profile" onClick={() => setMobileOpen(false)}>
+                        Mi perfil
+                      </NavLink>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
-    );
+
+        {/* Footer sidebar */}
+        <div className="nt-sidebar-footer">
+          <button
+            className="nt-sidebar-toggle d-none d-lg-inline-flex"
+            onClick={toggleSidebar}
+            type="button"
+            aria-label="Comprimir/expandir sidebar"
+            title={collapsed ? "Expandir" : "Comprimir"}
+          >
+            <i className={`fas ${collapsed ? "fa-angle-right" : "fa-angle-left"}`} />
+          </button>
+        </div>
+      </aside>
+
+      {/* ===== MAIN ===== */}
+      <div className="nt-main">
+        <header className="nt-topbar">
+          <div className="nt-topbar-left">
+            <button className="nt-burger d-lg-none" onClick={toggleSidebar} type="button" aria-label="Menu">
+              <i className="fas fa-bars" />
+            </button>
+
+            <div className="nt-search d-none d-md-flex" role="search">
+              <i className="fas fa-search" />
+              <input placeholder="Buscar..." aria-label="Buscar" />
+              <button type="button">Search</button>
+            </div>
+          </div>
+
+          <div className="nt-topbar-right">
+            <div className="dropdown">
+              <button className="nt-icon" data-bs-toggle="dropdown" type="button" aria-label="Notificaciones">
+                <i className="fas fa-bell" />
+                <span className="nt-dot" />
+              </button>
+              <div className="dropdown-menu dropdown-menu-end nt-dd">
+                <div className="nt-dd-head">Notificaciones</div>
+                <div className="nt-dd-empty text-muted">Sin notificaciones</div>
+              </div>
+            </div>
+
+            <div className="dropdown">
+              <button className="nt-icon" data-bs-toggle="dropdown" type="button" aria-label="Mensajes">
+                <i className="fas fa-envelope" />
+              </button>
+              <div className="dropdown-menu dropdown-menu-end nt-dd">
+                <div className="nt-dd-head">Mensajes</div>
+                <div className="nt-dd-empty text-muted">Sin mensajes</div>
+              </div>
+            </div>
+
+            <div className="nt-topbar-sep d-none d-sm-block" />
+
+            <div className="dropdown">
+              <button className="nt-user" data-bs-toggle="dropdown" type="button" aria-label="Usuario">
+                <img className="nt-avatar" src={avatarSrc} alt={user?.username} />
+                <div className="nt-user-meta d-none d-md-block">
+                  <div className="nt-user-name">{user?.username}</div>
+                  <div className="nt-user-role">{user?.rol}</div>
+                </div>
+                <i className="fas fa-chevron-down d-none d-md-block nt-caret" />
+              </button>
+
+              <div className="dropdown-menu dropdown-menu-end nt-dd">
+                <div className="nt-dd-head">Cuenta</div>
+
+                <a className="dropdown-item" href="#" onClick={(e) => e.preventDefault()}>
+                  <i className="fas fa-user me-2" />
+                  Perfil
+                </a>
+
+                <a className="dropdown-item" href="#" onClick={(e) => e.preventDefault()}>
+                  <i className="fas fa-cog me-2" />
+                  Configuración
+                </a>
+
+                <div className="dropdown-divider" />
+
+                <a className="dropdown-item text-danger" href="#" onClick={handleLogout}>
+                  <i className="fas fa-sign-out-alt me-2" />
+                  Cerrar sesión
+                </a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main className="nt-content">
+          <div className="container-fluid nt-container">
+            <Outlet />
+          </div>
+        </main>
+
+        <footer className="nt-footer">© NicaTech Solutions</footer>
+      </div>
+    </div>
+  );
 }
